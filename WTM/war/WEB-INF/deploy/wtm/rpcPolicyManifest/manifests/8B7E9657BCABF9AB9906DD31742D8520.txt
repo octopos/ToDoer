@@ -1,0 +1,2 @@
+serviceClass: com.example.cs6300todolist.WebActivity.client.GreetingService
+path: 0FB5F2EF75533701B72D16B839C79391.gwt.rpc
