@@ -155,6 +155,9 @@ public class ToDoListActivity extends Activity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+        case R.id.menu_sync:
+        	// Place code in here to explicitly sync to web
+            return true;
         case R.id.menu_duedate:
             sortType = SORT_DUEDATE;
             List<ToDoItem> todoList = getNewList();

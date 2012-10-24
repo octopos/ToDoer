@@ -94,6 +94,7 @@ public class MainActivity extends Activity {
                         selectedUser.getId());
                 myIntent.putExtra("com.example.cs6300todolist.username",
                         selectedUser.getName());
+                // Should do automatic sync here before intent is started
                 startActivityForResult(myIntent, 0);
             } else {
                 AlertDialog alertDialog;
