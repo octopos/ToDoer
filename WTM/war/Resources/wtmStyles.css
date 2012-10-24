@@ -1,0 +1,12 @@
+@CHARSET "ISO-8859-1";
+.titleStyle {
+	color: #777777;
+	font-size: 2em;
+	font-weight: bold;
+	font-style:italic;
+	text-align: center;
+}
+
+table.bottomBorder {  border:2px solid; border-collapse:collapse; }
+
+table.bottomBorder td, table.bottomBorder th { border-bottom:1px dotted black;padding:5px; }
