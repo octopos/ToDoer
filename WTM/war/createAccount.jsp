@@ -6,29 +6,28 @@
 <link rel="stylesheet" type="text/css" href="../Resources/wtmStyles.css">
 </head>
 <body>
-	<form action="login.do" method="get">
+	<form action="/createAcct" method="post">
 		<center>
 			<h1 class="titleStyle">Do-D-Due</h1>
 		</center>
 		<table align="center">
 			<tr>
 				<td>Username:</td>
-				<td><input name="username" type="text" /></td>
+				<td><input name="username" type="text"  /></td>
 			</tr>
 			<tr>
 				<td>Password:</td>
-				<td><input name="password" type="password" /></td>
+				<td><input name="password1" type="password" /></td>
 			</tr>
-			<tr align="right">
-				<td colspan="2"><input type="submit" value="Login"/></td>
+			<tr>
+				<td>Confirm Password:</td>
+				<td><input name="password2" type="password"/></td>
 			</tr>
-			<tr align="right">
-				<td colspan="2"><a href="createAccount.jsp">Create Account</a></td>
-			</tr>
-			<tr align="right">
-				<td colspan="2"><a href="showUser.jsp">Show user table</a></td>
+			<tr>
+				<td><input type="submit" value="Submit"/></td>
+				<td><input type="submit" value="Cancel"/></td>
 			</tr>
 		</table>
-	</form>
+		</form>
 </body>
 </html>
