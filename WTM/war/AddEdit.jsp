@@ -7,6 +7,15 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Add or Edit Task</title>
 <link rel="stylesheet" type="text/css" href="../Resources/wtmStyles.css">
+ <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.1/themes/base/jquery-ui.css" />
+    <script src="http://code.jquery.com/jquery-1.8.2.js"></script>
+    <script src="http://code.jquery.com/ui/1.9.1/jquery-ui.js"></script>
+    <link rel="stylesheet" href="/resources/demos/style.css" />
+    <script>
+    $(function() {
+        $( "#datepicker" ).datepicker();
+    });
+    </script>
 </head>
 <body>
 	<h1 class="titleStyle">Do-D-Due</h1>
@@ -21,8 +30,13 @@
 				<td><input name="note" type="text" /></td>
 			</tr>
 			<tr>
-				<td><input type="checkbox" name="hasDueDate"></td>
-				<td>Set Due Time? </td>
+				<td>Date:</td>
+				<td><input type="text" id="datepicker" /></p></td>
+			</tr>
+			<tr>
+				<td>Due Time:</td>
+				<td><input type="checkbox" name="hasDueDate"></td> 
+			</tr>
 			</tr>
 			<tr>
 				<td>Priority:</td>
