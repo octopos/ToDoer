@@ -2,15 +2,60 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Login</title>
+<title>Create Account</title>
 <link rel="stylesheet" type="text/css" href="../Resources/wtmStyles.css">
 </head>
+
+<%
+	String error=request.getParameter("error");
+	if(error==null || error=="null"){
+ 		error="";
+	}
+%>
+
+<script>
+    function trim(s) 
+    {
+        return s.replace( /^\s*/, "" ).replace( /\s*$/, "" );
+    }
+
+    function validate()
+    {
+        if(trim(document.frmCreateAcct.username.value)=="")
+        {
+          alert("Username empty!");
+          document.frmCreateAcct.username.focus();
+          error = "You must have a username";
+          return false;
+        }
+        else if(trim(document.frmCreateAcct.password1.value)==""
+        		|| trim(document.frmCreateAcct.password2.value)=="" )
+        {
+          alert("Passwords cannot be empty!");
+          document.frmCreateAcct.password1.focus();
+          return false;
+        }
+        else if( trim(document.frmCreateAcct.password1.value) !=
+    		 trim(document.frmCreateAcct.password2.value) )
+        {
+        	alert("Passwords do not match!");
+        	document.frmCreateAcct.password1.value="";
+        	document.frmCreateAcct.password2.value="";
+            document.frmCreateAcct.password1.focus();
+            return false;
+        }
+    }
+</script>
+
 <body>
-	<form action="/createAcct" method="post">
+	<form name="frmCreateAcct" onSubmit="return validate();" action="/createAcct" method="post">
 		<center>
 			<h1 class="titleStyle">Do-D-Due</h1>
 		</center>
 		<table align="center">
+			<tr>
+				<td colspan="2"><div><%=error%></div></td>
+			</tr>
 			<tr>
 				<td>Username:</td>
 				<td><input name="username" type="text"  /></td>
