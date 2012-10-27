@@ -15,6 +15,14 @@
 		<servlet-name>CreateAccountServlet</servlet-name>
 		<url-pattern>/createAcct</url-pattern>
 	</servlet-mapping>
+	<servlet>
+		<servlet-name>CreateItemServlet</servlet-name>
+		<servlet-class>com.wtm.todo.CreateItemServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>CreateItemServlet</servlet-name>
+		<url-pattern>/createItem</url-pattern>
+	</servlet-mapping>
 	<welcome-file-list>
 		<welcome-file>login.html</welcome-file>
 	</welcome-file-list>

@@ -28,13 +28,23 @@
     	// find the input fields and apply the time select to them.
         $('#timepicker').ptTimeSelect();
     });
+    function validate()
+    {
+        if(trim(document.frmCreateItem.taskname.value)=="")
+        {
+          alert("Taskname cannot be empty!");
+          document.frmCreateAcct.username.focus();
+          error = "You must have a taskname";
+          return false;
+        }
+    }
     </script>
-
+	
 
 </head>
 <body>
 	<h1 class="titleStyle">Do-D-Due</h1>
-	<form action="login.do" method="get">
+	<form name="frmCreateItem" onSubmit="return validate();" action="/createItem" method="post">
 		<table align="center">
 			<tr>
 				<td>Task Name:</td>
@@ -56,11 +66,11 @@
 			<tr>
 				<td>Priority:</td>
 				<td>
-					<input type="radio" name="priority" id="low" /><label for="low" />
+					<input type="radio" name="priority" id="low" value="1" checked/><label for="low" />
 						<img src="../Resources/circle_green.png" height="20">
-					<input type="radio" name="priority" id="medium" /><label for="medium" />
+					<input type="radio" name="priority" id="medium" value="2" /><label for="medium" />
 						<img src="../Resources/circle_yellow.png" height="20">
-					<input type="radio" name="priority" id="high" /><label for="high" />
+					<input type="radio" name="priority" id="high" value="3" /><label for="high" />
 						<img src="../Resources/circle_red.png" height="20">
 				</td>
 			</tr>
