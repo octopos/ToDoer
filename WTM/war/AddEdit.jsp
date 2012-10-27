@@ -11,11 +11,26 @@
     <script src="http://code.jquery.com/jquery-1.8.2.js"></script>
     <script src="http://code.jquery.com/ui/1.9.1/jquery-ui.js"></script>
     <link rel="stylesheet" href="/resources/demos/style.css" />
+    <!--
+    Copyright (c) 2007-2012 Paul T. (purtuga.com)
+    
+    $Date: 2012/08/05 19:40:25 $
+    $Author: paulinho4u $
+    $Revision: 1.1 $
+	-->
+    <link rel="stylesheet" type="text/css" href="../Resources/style/jquery.ptTimeSelect.css" />
+	<script type="text/javascript" src="../Resources/scripts/jquery.ptTimeSelect.js"></script>
     <script>
     $(function() {
         $( "#datepicker" ).datepicker();
     });
+    $(document).ready(function(){
+    	// find the input fields and apply the time select to them.
+        $('#timepicker').ptTimeSelect();
+    });
     </script>
+
+
 </head>
 <body>
 	<h1 class="titleStyle">Do-D-Due</h1>
@@ -35,7 +50,7 @@
 			</tr>
 			<tr>
 				<td>Due Time:</td>
-				<td><input type="checkbox" name="hasDueDate"></td> 
+				<td><input id="timepicker" value="" /> <br/></td> 
 			</tr>
 			</tr>
 			<tr>
