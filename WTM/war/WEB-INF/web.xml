@@ -24,7 +24,7 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>AddEditServlet</servlet-name>
-		<url-pattern>/addedit.do</url-pattern>
+		<url-pattern>/addEdit</url-pattern>
 	</servlet-mapping>
  <servlet>
   <servlet-name>SystemServiceServlet</servlet-name>
