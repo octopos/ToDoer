@@ -6,6 +6,7 @@ import java.util.List;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
@@ -22,6 +23,7 @@ import com.google.appengine.api.datastore.Query.FilterPredicate;
 public class LoginServlet extends HttpServlet {
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException {
+		HttpSession session = req.getSession(true);
 		String name = req.getParameter("username");
 		String pass = req.getParameter("password");
 		
@@ -40,6 +42,8 @@ public class LoginServlet extends HttpServlet {
 				String returnedPassword = (String) thisUser.getProperty("Password");
 				if( pass.equals(returnedPassword) ){
 					resp.sendRedirect("list.jsp");
+					session.setAttribute("User", thisUser.getProperty("Username"));
+
 				}
 			}
 		} else {
