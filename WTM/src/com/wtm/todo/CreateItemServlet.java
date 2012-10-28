@@ -8,6 +8,7 @@ import java.util.List;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
@@ -24,49 +25,27 @@ import com.google.appengine.api.datastore.Query.FilterPredicate;
 public class CreateItemServlet extends HttpServlet {
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException {
-		String name = req.getParameter("username");
-		//String pass = req.getParameter("password");
-		ArrayList<String> names = new ArrayList<String>(Arrays.asList("abc",
-				"me", "you"));
-		if (names.contains(name)) {
-			/*
-			RequestDispatcher view = req.getRequestDispatcher("home.jsp");
-			try {
-				view.forward(req, resp);
-			} catch (ServletException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			*/
-			resp.sendRedirect("home.jsp");
-		} else {
-			resp.sendRedirect("error.html");
-		}
-		
 	}
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException {
-		String name = req.getParameter("username");
-		String password1 = req.getParameter("password1");				
+		HttpSession session = req.getSession(true);
+		String user = (String)session.getAttribute("User");
+		String name = req.getParameter("taskname");
+		String note = req.getParameter("note");
+		String date = req.getParameter("datepicker");
+		String time = req.getParameter("timepicker");
+		int priority = Integer.parseInt(req.getParameter("priority"));
 		
 		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-		Key dbKey = KeyFactory.createKey("CDB", "userDB");
-		Filter existFltr = new FilterPredicate("Username" , FilterOperator.EQUAL , name );
-		Query query = new Query("users" , dbKey).setFilter(existFltr);
-		List<Entity> usersExist = datastore.prepare(query).asList(FetchOptions.Builder.withLimit(5));
-		if( usersExist.isEmpty() )
-		{
-			Entity user = new Entity("users" , dbKey);
-			user.setProperty("Username", name);
-			user.setProperty("Password", password1);
-			datastore.put(user);
-			resp.sendRedirect("login.html");
-		}
-		else
-		{
-			// Should print out alert box indicating user already exists
-			req.setAttribute("error" , "User already exists!");
-			resp.sendRedirect("createAccount.jsp?error=User already exists!");
-		}
+		Key dbKey = KeyFactory.createKey("CDB", "itemDB");
+		
+			Entity item = new Entity("items" , dbKey);
+			item.setProperty("Taskname", name);
+			item.setProperty("Note", note);
+			item.setProperty("Datee", date);
+			item.setProperty("Time", time);
+			item.setProperty("Priority", priority);
+			datastore.put(item);
+			resp.sendRedirect("home.jsp");
 	}
 }

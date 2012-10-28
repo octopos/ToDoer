@@ -44,6 +44,7 @@
         	pageContext.setAttribute("item_priority" ,
         			singleItem.getProperty("Priority"));
         %>
+        		
                 <p>${(item_user)}:${(item_name)}: ${(item_note)} :${(item_date)}: ${(item_time)}: ${(item_priority)}</p>
 
         <%
