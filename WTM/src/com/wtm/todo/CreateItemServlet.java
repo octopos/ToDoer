@@ -42,7 +42,7 @@ public class CreateItemServlet extends HttpServlet {
 			Entity item = new Entity("items" , dbKey);
 			item.setProperty("Taskname", name);
 			item.setProperty("Note", note);
-			item.setProperty("Datee", date);
+			item.setProperty("Date", date);
 			item.setProperty("Time", time);
 			item.setProperty("Priority", priority);
 			datastore.put(item);
