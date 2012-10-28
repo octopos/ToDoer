@@ -1,8 +1,6 @@
 package com.wtm.todo;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.HttpServlet;
@@ -24,24 +22,7 @@ import com.google.appengine.api.datastore.Query.FilterPredicate;
 public class CreateItemServlet extends HttpServlet {
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException {
-		String name = req.getParameter("username");
-		//String pass = req.getParameter("password");
-		ArrayList<String> names = new ArrayList<String>(Arrays.asList("abc",
-				"me", "you"));
-		if (names.contains(name)) {
-			/*
-			RequestDispatcher view = req.getRequestDispatcher("home.jsp");
-			try {
-				view.forward(req, resp);
-			} catch (ServletException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			*/
-			resp.sendRedirect("home.jsp");
-		} else {
-			resp.sendRedirect("error.html");
-		}
+
 		
 	}
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
@@ -60,7 +41,7 @@ public class CreateItemServlet extends HttpServlet {
 			user.setProperty("Username", name);
 			user.setProperty("Password", password1);
 			datastore.put(user);
-			resp.sendRedirect("login.html");
+			resp.sendRedirect("login.jsp");
 		}
 		else
 		{
