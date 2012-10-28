@@ -38,7 +38,7 @@ public class CreateAccountServlet extends HttpServlet {
 				e.printStackTrace();
 			}
 			*/
-			resp.sendRedirect("home.jsp");
+			resp.sendRedirect("list.jsp");
 		} else {
 			resp.sendRedirect("error.html");
 		}
@@ -46,27 +46,33 @@ public class CreateAccountServlet extends HttpServlet {
 	}
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException {
-		String name = req.getParameter("username");
-		String password1 = req.getParameter("password1");				
-		
-		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-		Key dbKey = KeyFactory.createKey("CDB", "userDB");
-		Filter existFltr = new FilterPredicate("Username" , FilterOperator.EQUAL , name );
-		Query query = new Query("users" , dbKey).setFilter(existFltr);
-		List<Entity> usersExist = datastore.prepare(query).asList(FetchOptions.Builder.withLimit(5));
-		if( usersExist.isEmpty() )
-		{
-			Entity user = new Entity("users" , dbKey);
-			user.setProperty("Username", name);
-			user.setProperty("Password", password1);
-			datastore.put(user);
-			resp.sendRedirect("login.html");
+		if( req.getParameter("button").equals("Submit") ){
+			String name = req.getParameter("username");
+			String password1 = req.getParameter("password1");				
+			
+			DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+			Key dbKey = KeyFactory.createKey("CDB", "userDB");
+			Filter existFltr = new FilterPredicate("Username" , FilterOperator.EQUAL , name );
+			Query query = new Query("users" , dbKey).setFilter(existFltr);
+			List<Entity> usersExist = datastore.prepare(query).asList(FetchOptions.Builder.withLimit(5));
+			if( usersExist.isEmpty() )
+			{
+				Entity user = new Entity("users" , dbKey);
+				user.setProperty("Username", name);
+				user.setProperty("Password", password1);
+				datastore.put(user);
+				resp.sendRedirect("login.jsp");
+			}
+			else
+			{
+				// Should print out alert box indicating user already exists
+				req.setAttribute("error" , "User already exists!");
+				resp.sendRedirect("createAccount.jsp?error=User already exists!");
+			}
 		}
 		else
 		{
-			// Should print out alert box indicating user already exists
-			req.setAttribute("error" , "User already exists!");
-			resp.sendRedirect("createAccount.jsp?error=User already exists!");
+			resp.sendRedirect("login.jsp");
 		}
 	}
 }

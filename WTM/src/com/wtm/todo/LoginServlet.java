@@ -25,6 +25,10 @@ public class LoginServlet extends HttpServlet {
 		String name = req.getParameter("username");
 		String pass = req.getParameter("password");
 		
+		if( name == "" || pass == "" ){
+			resp.sendRedirect("login.jsp?error=Incorrect username/password");
+			return;
+		}
 		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 		Key dbKey = KeyFactory.createKey("CDB", "userDB");
 		Filter existFltr = new FilterPredicate("Username" , FilterOperator.EQUAL , name );
@@ -35,11 +39,11 @@ public class LoginServlet extends HttpServlet {
 			for ( Entity thisUser : usersExist ){
 				String returnedPassword = (String) thisUser.getProperty("Password");
 				if( pass.equals(returnedPassword) ){
-					resp.sendRedirect("home.jsp");
+					resp.sendRedirect("list.jsp");
 				}
 			}
 		} else {
-			resp.sendRedirect("error.html");
+			resp.sendRedirect("login.jsp?error=Incorrect username/password");
 		}
 		
 	}

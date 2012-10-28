@@ -14,21 +14,49 @@
     <link type="text/css" rel="stylesheet" href="/stylesheets/main.css" />
   </head>
 
+<%
+	String error=request.getParameter("error");
+	if(error==null || error=="null"){
+ 		error="";
+	}
+%>
+
+<script>
+    function trim(s) 
+    {
+        return s.replace( /^\s*/, "" ).replace( /\s*$/, "" );
+    }
+
+    function validate()
+    {
+        if(trim(document.frmChangePassword.newPassword.value)=="")
+        {
+          alert("New password cannot be empty!");
+          document.frmChangePassword.newPassword.focus();
+          return false;
+        }
+    }
+    
+</script>
+
   <body>
-	<form action="password.do" method="post">
+	<form name="frmChangePassword" action="/changePassword" method="post">
 		<h1 class="titleStyle">Do-D-Due</h1>
 		<table align="center">
 			<tr>
+				<td colspan="2"><%=error%></td>
+			</tr>
+			<tr>
 				<td>Old Password:</td>
-				<td><input name="password" type="password" /></td>
+				<td><input name="oldPassword" type="password" /></td>
 			</tr>
 			<tr>
 				<td>New Password:</td>
-				<td><input name="password" type="password" /></td>
+				<td><input name="newPassword" type="password" /></td>
 			</tr>
 			<tr>
-				<td><input type="submit" value="Submit"/></td>
-				<td><input type="submit" value="Cancel"/></td>
+				<td><input type="submit" onclick = "return validate()" name="button" value="Submit"/></td>
+				<td><input type="submit" name="button" value="Cancel"/></td>
 			</tr>
 		</table>
 		</form>
