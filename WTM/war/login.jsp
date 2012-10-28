@@ -57,6 +57,9 @@
 				<td colspan="2"><input type="submit" value="Login"/></td>
 			</tr>
 			<tr align="right">
+				<td colspan="2"><a href="forgotPassword.jsp">Forgot Password</a></td>
+			</tr>
+			<tr align="right">
 				<td colspan="2"><a href="createAccount.jsp">Create Account</a></td>
 			</tr>
 			<tr align="right">

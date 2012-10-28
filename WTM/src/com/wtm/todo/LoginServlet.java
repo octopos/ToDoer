@@ -27,25 +27,22 @@ public class LoginServlet extends HttpServlet {
 		String name = req.getParameter("username");
 		String pass = req.getParameter("password");
 		
-		if( name == "" || pass == "" ){
-			resp.sendRedirect("login.jsp?error=Incorrect username/password");
-			return;
-		}
 		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 		Key dbKey = KeyFactory.createKey("CDB", "userDB");
 		Filter existFltr = new FilterPredicate("Username" , FilterOperator.EQUAL , name );
 		Query query = new Query("users" , dbKey).setFilter(existFltr);
 		List<Entity> usersExist = datastore.prepare(query).asList(FetchOptions.Builder.withLimit(5));
-		if( !usersExist.isEmpty() )
+		if( usersExist.size() == 1 )
 		{
-			for ( Entity thisUser : usersExist ){
-				String returnedPassword = (String) thisUser.getProperty("Password");
-				if( pass.equals(returnedPassword) ){
-					resp.sendRedirect("list.jsp");
-					session.setAttribute("User", thisUser.getProperty("Username"));
-
-				}
+			Entity thisUser = usersExist.get(0);
+			String returnedPassword = (String) thisUser.getProperty("Password");
+			if( pass.equals(returnedPassword) ){
+				resp.sendRedirect("list.jsp");
+				session.setAttribute("User", thisUser.getProperty("Username"));
+			} else {
+				resp.sendRedirect("login.jsp?error=Incorrect username/password");
 			}
+
 		} else {
 			resp.sendRedirect("login.jsp?error=Incorrect username/password");
 		}

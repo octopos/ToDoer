@@ -8,6 +8,14 @@
 		<url-pattern>/login</url-pattern>
 	</servlet-mapping>
 	<servlet>
+		<servlet-name>ResetPasswordServlet</servlet-name>
+		<servlet-class>com.wtm.todo.ResetPasswordServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ResetPasswordServlet</servlet-name>
+		<url-pattern>/resetPassword</url-pattern>
+	</servlet-mapping>
+	<servlet>
 		<servlet-name>ChangePasswordServlet</servlet-name>
 		<servlet-class>com.wtm.todo.ChangePasswordServlet</servlet-class>
 	</servlet>

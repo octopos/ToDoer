@@ -10,9 +10,10 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <html>
-  <head>
-    <link type="text/css" rel="stylesheet" href="/stylesheets/main.css" />
-  </head>
+<head>
+<link rel="stylesheet" type="text/css" href="../Resources/wtmStyles.css">
+</head>
+<title>Change Password</title>
 
 <%
 	String error=request.getParameter("error");
@@ -41,7 +42,7 @@
 
   <body>
 	<form name="frmChangePassword" action="/changePassword" method="post">
-		<h1 class="titleStyle">Do-D-Due</h1>
+	<h1 class="titleStyle">Do-D-Due</h1>
 		<table align="center">
 			<tr>
 				<td colspan="2"><%=error%></td>
