@@ -38,7 +38,6 @@ public class EditItemActivity extends Activity {
         itemId = getIntent().getLongExtra("com.example.cs6300todolist.itemid",
                 0);
         itemdatasource = new ToDoItemDataSource(this);
-        itemdatasource.open();
         final EditText itemNameEditText = (EditText) findViewById(R.id.editText41);
         final EditText itemNoteEditText = (EditText) findViewById(R.id.editText42);
         final CheckBox setDueTimeCheckBox = (CheckBox) findViewById(R.id.checkBox41);

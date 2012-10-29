@@ -1,29 +1,34 @@
 package com.example.database;
 
-public class ToDoItem {
-	  private long id;
-	  private long userId;
-	  private String name;
-	  private String note;
-	  private long dueTime;
-	  private boolean checked; 
-	  private boolean noDueTime;
-	  private long priority;
+import java.io.Serializable;
 
-	  public long getId() {
-	    return id;
-	  }
+public class ToDoItem implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4606027749169480484L;
+	private long id;
+	private long userId;
+	private String name;
+	private String note;
+	private long dueTime;
+	private boolean checked;
+	private boolean noDueTime;
+	private long priority;
 
-	  public void setId(long id) {
-	    this.id = id;
-	  }
+	public long getId() {
+		return id;
+	}
 
-
-	  // Will be used by the ArrayAdapter in the ListView
-	  @Override
-	  public String toString() {
-	    return name;
-	  }
+	public void setId(long id) {
+		this.id = id;
+	}
+	
+	// Will be used by the ArrayAdapter in the ListView
+	@Override
+	public String toString() {
+		return name;
+	}
 
 	public long getUserId() {
 		return userId;
@@ -80,4 +85,4 @@ public class ToDoItem {
 	public void setPriority(long priority) {
 		this.priority = priority;
 	}
-} 
+}

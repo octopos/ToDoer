@@ -28,4 +28,5 @@
     <string name="sortbypriority">Sort by priority</string>
     <string name="changepwd">Change password</string>
     <string name="logout">Logout</string>
+    <string name="sync">Synchronize</string>
 </resources>

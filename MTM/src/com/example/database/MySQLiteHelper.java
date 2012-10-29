@@ -10,6 +10,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 	  public static final String TABLE_COMMENTS = "comments";
 	  public static final String TABLE_USERS = "users";
 	  public static final String TABLE_TODOLIST = "todolist";
+	  public static final String TABLE_TASKCHANGES = "taskchanges";//TC
 	  
 	  public static final String COLUMN_ID = "_id";
 	  public static final String COLUMN_NAME = "name";
@@ -23,11 +24,14 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 	  public static final String COLUMN_CHECKED = "checked";
 	  public static final String COLUMN_PRIORITY = "priority";
 	  
-	  public static final String COLUMN_COMMENT = "comment";
-	  
-	  
+	  public static final String COLUMN_TCTASKID = "taskid";
+	  public static final String COLUMN_TCACTION = "action";
+	  public static final String COLUMN_TCTIME = "timestamp";
 
-	  public static final String DATABASE_NAME = "todlist.db";
+	  
+	  public static final String COLUMN_COMMENT = "comment";
+
+	  public static final String DATABASE_NAME = "todolist.db";
 	  private static final int DATABASE_VERSION = 1;
 
 	  private static final String USER_DATABASE_CREATE = "create table "
@@ -46,8 +50,11 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 			  + " integer default 0, " + COLUMN_PRIORITY
 			  + " integer default 0, " + COLUMN_CHECKED
 			  + " integer default 0);";
-
 	  
+	  private static final String TASKCHANGE_DATABASE_CREATE = "create table "
+			  + TABLE_TASKCHANGES + "(" + COLUMN_TCTASKID + " integer primary key, " 
+			  + COLUMN_TCACTION  + " text , " 
+			  + COLUMN_TCTIME  + " text );";
 	  
 	  private static final String DATABASE_CREATE = "create table "
 		      + TABLE_COMMENTS + "(" + COLUMN_ID
@@ -65,6 +72,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 		database.execSQL(DATABASE_CREATE);
 		database.execSQL(USER_DATABASE_CREATE);
 		database.execSQL(TODOLIST_DATABASE_CREATE);
+		database.execSQL(TASKCHANGE_DATABASE_CREATE);
 	}
 
 	@Override
@@ -75,7 +83,8 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 	        db.execSQL("DROP TABLE IF EXISTS " + TABLE_COMMENTS);
 	        db.execSQL("DROP TABLE IF EXISTS " + TABLE_USERS);
 	        db.execSQL("DROP TABLE IF EXISTS " + TABLE_TODOLIST);
-	        onCreate(db);
+	        db.execSQL("DROP TABLE IF EXISTS " + TABLE_TASKCHANGES);
+		onCreate(db);
 	}
 
 }
