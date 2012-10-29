@@ -3,6 +3,8 @@ package com.wtm.database;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
@@ -75,6 +77,35 @@ public class UserDataSource {
 			return true;
 		}
 		return false;
+	}
+
+	public Users getUserById(long id) {
+		long tempId;
+		Users newUser = new Users();
+		Query query = new Query("users", dbKey).addSort("Username", Query.SortDirection.DESCENDING);
+		List<Entity> userExists = datastore.prepare(query).asList(FetchOptions.Builder.withDefaults());
+		String temp;
+		
+		if( !userExists.isEmpty() )
+		{
+			for(Entity thisUser : userExists)
+			{
+				Pattern pattern = Pattern.compile("\\(.+?\\)");
+				Matcher matcherValidity = pattern.matcher(thisUser.getKey().toString());
+				if(matcherValidity.find(5)){
+					temp = matcherValidity.group(0);
+					temp = temp.replace("(", "");
+					temp = temp.replace(")","");
+					tempId = Long.parseLong(temp);
+					if(tempId == id)
+					{
+						newUser = entityToUser( thisUser );
+						break;
+					}
+				}
+			}
+		}
+		return newUser;	 
 	}
 
 	public Users entityToUser(Entity thisEntity){
