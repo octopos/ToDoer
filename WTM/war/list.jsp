@@ -8,6 +8,15 @@
 <title>Home</title>
 <link rel="stylesheet" type="text/css" href="../Resources/wtmStyles.css">
 </head>
+
+<script>
+	function confirmDelete(){
+		var r = confirm("Are you sure you want to delete this item?");
+		return r;
+	}
+	
+</script>
+	
 <body>
 	<h1 class="titleStyle">Do-D-Due</h1>
 	<table align="center" cellpadding="10" cellspacing="10">
@@ -19,7 +28,7 @@
 						<td>Task 1</td>
 						<td><img src="../Resources/circle_green.png" height="20"></td>
 						<td><input type="button" value="Edit"></input></td>
-						<td><input type="button" value="Delete"></input></td>
+						<td><input type="button" onclick="return confirmDelete()" value="Delete"></input></td>
 					</tr>
 					<tr>
 						<td><input type="checkbox"></td>

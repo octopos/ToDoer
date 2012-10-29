@@ -65,7 +65,9 @@ public class ToDoItemDataSource {
 	  }
 	  
 	  public void updateItem(ToDoItem item) {
-		  
+			DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+			Key dbKey = KeyFactory.createKey("CDB", "itemDB");
+			datastore.delete(getItemID(item));
 	  }
 
 
@@ -96,7 +98,10 @@ public class ToDoItemDataSource {
 		        	temp.setName((String)singleItem.getProperty("Taskname"));
 		        	//temp.setName("abcd");
 		        	temp.setNote((String)singleItem.getProperty("Note"));
-		        	//temp.setDueTime(singleItem.getProperty("Date"));
+		        	//Remove this
+		        	temp.setDueDate((String)singleItem.getProperty("Date"));
+		        	temp.setDueTime2((String)singleItem.getProperty("Time"));
+		        	//End Remove
 		        	temp.setChecked((Boolean) singleItem.getProperty("Checked"));
 		        	temp.setPriority((Long)singleItem.getProperty("Priority"));
 		        	toDoList.add(temp);
@@ -148,7 +153,12 @@ public class ToDoItemDataSource {
 		        	temp.setName((String)singleItem.getProperty("Taskname"));
 		        	//temp.setName("abcd");
 		        	temp.setNote((String)singleItem.getProperty("Note"));
-		        	//temp.setDueTime(singleItem.getProperty("Date"));
+		        	//Remove this
+		        	temp.setDueDate((String)singleItem.getProperty("Date"));
+		        	System.out.println((String)singleItem.getProperty("Date"));
+		        	temp.setDueTime2((String)singleItem.getProperty("Time"));
+		        	System.out.println((String)singleItem.getProperty("Time"));
+		        	//End Remove
 		        	temp.setChecked((Boolean) singleItem.getProperty("Checked"));
 		        	temp.setPriority((Long)singleItem.getProperty("Priority"));
 		        	list.add(temp);

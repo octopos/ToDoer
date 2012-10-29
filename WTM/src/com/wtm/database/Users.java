@@ -1,16 +1,17 @@
 package com.wtm.database;
 
 public class Users {
-	  private long id;
 	  private String name;
 	  private String encryptedPwd;
 
-	  public long getId() {
-	    return id;
+	  Users(String username, String password){
+		  name = username;
+		  encryptedPwd = password;
 	  }
-
-	  public void setId(long id) {
-	    this.id = id;
+	  
+	  Users(){
+		  name = "";
+		  encryptedPwd= "";
 	  }
 
 	  public String getName() {
