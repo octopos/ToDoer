@@ -48,13 +48,13 @@
 </script>
 
 <body>
-	<form name="frmCreateAcct" onSubmit="return validate();" action="/createAcct" method="post">
+	<form name="frmCreateAcct" action="/createAcct" method="post">
 		<center>
 			<h1 class="titleStyle">Do-D-Due</h1>
 		</center>
 		<table align="center">
 			<tr>
-				<td colspan="2"><div><%=error%></div></td>
+				<td colspan="2"><%=error%></td>
 			</tr>
 			<tr>
 				<td>Username:</td>
@@ -69,8 +69,8 @@
 				<td><input name="password2" type="password"/></td>
 			</tr>
 			<tr>
-				<td><input type="submit" value="Submit"/></td>
-				<td><input type="submit" value="Cancel"/></td>
+				<td><input type="submit" name="button" onclick = "return validate()" value="Submit"/></td>
+				<td><input type="submit" name="button" value="Cancel"/></td>
 			</tr>
 		</table>
 		</form>
