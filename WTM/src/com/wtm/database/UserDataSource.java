@@ -94,8 +94,8 @@ public class UserDataSource {
 		return newUser;
 	}
 
-	public void deleteUser(Users user) {
-		Filter existFltr = new FilterPredicate("Username" , FilterOperator.EQUAL , user.getName() );
+	public void deleteUser(String name) {
+		Filter existFltr = new FilterPredicate("Username" , FilterOperator.EQUAL , name );
 		Query query = new Query("users" , dbKey).setFilter(existFltr);
 		List<Entity> usersExist = datastore.prepare(query).asList(FetchOptions.Builder.withLimit(5));
 		if( !usersExist.isEmpty() )
