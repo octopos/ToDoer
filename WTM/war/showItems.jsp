@@ -7,13 +7,6 @@
 <%@ page import="com.google.appengine.api.datastore.FetchOptions" %>
 <%@ page import="com.google.appengine.api.datastore.Key" %>
 <%@ page import="com.google.appengine.api.datastore.KeyFactory" %>
-<%@ page import="com.google.appengine.api.datastore.PreparedQuery" %>
-<%@ page import="com.google.appengine.api.datastore.Query.Filter"%>
-<%@ page import="com.google.appengine.api.datastore.Query.FilterPredicate"%>
-<%@ page import="com.google.appengine.api.datastore.Query.FilterOperator"%>
-<%@ page import="com.google.appengine.api.datastore.Query.CompositeFilter"%>
-<%@ page import="com.google.appengine.api.datastore.Query.CompositeFilterOperator"%>
-<%@ page import="com.google.appengine.api.datastore.Query.SortDirection"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 <html>
@@ -24,38 +17,37 @@
   <body>
 	<%
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-    Key dbKey = KeyFactory.createKey("CDB", "itemsDB");
-    // Run an ancestor query to ensure we see the most up-to-date
-    // view of the Greetings belonging to the selected Guestbook.
-    Query q = new Query("Item").addSort("Taskname", SortDirection.ASCENDING);
-    List<Entity> items = datastore.prepare(q)
-                                .asList(FetchOptions.Builder.withDefaults());
-	if (items.isEmpty()) {
+    Key dbKey = KeyFactory.createKey("CDB", "itemDB");
+    Query query = new Query("items", dbKey).addSort("Taskname", Query.SortDirection.DESCENDING);
+    List<Entity> items = datastore.prepare(query).asList(FetchOptions.Builder.withDefaults());
+    if (items.isEmpty()) {
         %>
         <p>There are no items.</p>
         <%
     } else {
         %>
-	<%for (Entity result : items) {
-  		String key = result.getKey().toString();
-  		pageContext.setAttribute("item_key",key);
+        <p>Items in database.</p>
+        <%
+        for (Entity singleItem : items) {
+        	pageContext.setAttribute("item_key",singleItem.getKey());
         	pageContext.setAttribute("item_user" ,
-        			result.getProperty("Username"));
+        			singleItem.getProperty("Username"));
         	pageContext.setAttribute("item_name" ,
-        			result.getProperty("Taskname"));
+        			singleItem.getProperty("Taskname"));
         	pageContext.setAttribute("item_note" ,
-        			result.getProperty("Note"));
+        			singleItem.getProperty("Note"));
         	pageContext.setAttribute("item_date" ,
-        			result.getProperty("Date"));
+        			singleItem.getProperty("Date"));
         	pageContext.setAttribute("item_time" ,
-        			result.getProperty("Time"));
+        			singleItem.getProperty("Time"));
         	pageContext.setAttribute("item_priority" ,
-        			result.getProperty("Priority"));
+        			singleItem.getProperty("Priority"));
         %>
         		
                 <p>${(item_key)}:${(item_user)}:${(item_name)}: ${(item_note)} :${(item_date)}: ${(item_time)}: ${(item_priority)}</p>
-	 <%
-    }
+
+        <%
+        }
     }
 %>
   </body>

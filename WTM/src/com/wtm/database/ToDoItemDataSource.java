@@ -6,12 +6,18 @@ import java.util.List;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.FetchOptions;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
+import com.google.appengine.api.datastore.Query;
+import com.google.appengine.api.datastore.Query.Filter;
+import com.google.appengine.api.datastore.Query.FilterOperator;
+import com.google.appengine.api.datastore.Query.FilterPredicate;
 
 public class ToDoItemDataSource {
 
 	   private static ToDoItemDataSource instance = null;
+	   private static List<ToDoItem> toDoList;
 	   protected ToDoItemDataSource() {
 	      // Exists only to defeat instantiation.
 	   }
@@ -48,8 +54,16 @@ public class ToDoItemDataSource {
 	  }
 
 
-	  public List<ToDoItem> getToDoListByUId(long userId) {
-	    List<ToDoItem> list = new ArrayList<ToDoItem>();
+	  public List<Entity> getToDoListByUId(String username) {
+		  DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+			Key dbKey = KeyFactory.createKey("CDB", "itemDB");
+			Filter existFltr = new FilterPredicate("Username" , FilterOperator.EQUAL , username );
+			Query query = new Query("items" , dbKey).setFilter(existFltr);
+			List<Entity> list = datastore.prepare(query).asList(FetchOptions.Builder.withLimit(5));
+			if(!list.isEmpty() )
+			{
+				
+			}
 	    return list;
 	  }
 
