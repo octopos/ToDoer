@@ -42,7 +42,7 @@
 				
 					<tr>
 						<td align="right">
-							<form action="addedit.do" method="get">
+							<form action="AddEdit.jsp" method="post">
 								<input type="submit" value="Add task">
 							</form>
 						</td>

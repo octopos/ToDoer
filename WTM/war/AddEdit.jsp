@@ -44,7 +44,7 @@
 </head>
 <body>
 	<h1 class="titleStyle">Do-D-Due</h1>
-	<form name="frmCreateItem" onSubmit="return validate();" action="/createItem" method="post">
+	<form name="frmCreateItem" onSubmit="return validate();" action="/addEdit" method="post">
 		<table align="center">
 			<tr>
 				<td>Task Name:</td>
@@ -56,11 +56,11 @@
 			</tr>
 			<tr>
 				<td>Date:</td>
-				<td><input type="text" id="datepicker" /></td>
+				<td><input type="text" name="datepicker" id="datepicker"/></td>
 			</tr>
 			<tr>
 				<td>Due Time:</td>
-				<td><input id="timepicker" value="" /> <br/></td> 
+				<td><input name="timepicker" id="timepicker"value="" /> <br/></td> 
 			</tr>
 			<tr>
 				<td>Priority:</td>
