@@ -19,20 +19,19 @@ import com.example.database.Users;
 
 public class MainActivity extends Activity {
 
-    private UserDataSource datasource;
+    private UserDataSource userdatasource;
     private ArrayList<Users> listofUsers;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        datasource = new UserDataSource(this);
-        datasource.open();
+        userdatasource = new UserDataSource(this);
         listofUsers = new ArrayList<Users>();
-        listofUsers.addAll(datasource.getAllUsers());
+        listofUsers.addAll(userdatasource.getAllUsers());
 
         final Spinner user_spinner = (Spinner) findViewById(R.id.spinner1);
-        List<Users> allusers = datasource.getAllUsers();
+        List<Users> allusers = userdatasource.getAllUsers();
         ArrayAdapter<Users> adapter = new ArrayAdapter<Users>(this,
                 android.R.layout.simple_spinner_item, allusers);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -51,8 +50,7 @@ public class MainActivity extends Activity {
         pwd_EditText.setText("");
         if (resultCode == RESULT_OK) {
             final Spinner user_spinner = (Spinner) findViewById(R.id.spinner1);
-            datasource.open();
-            List<Users> allusers = datasource.getAllUsers();
+            List<Users> allusers = userdatasource.getAllUsers();
             ArrayAdapter<Users> adapter = new ArrayAdapter<Users>(this,
                     android.R.layout.simple_spinner_item, allusers);
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -133,17 +131,5 @@ public class MainActivity extends Activity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.activity_main, menu);
         return true;
-    }
-
-    @Override
-    protected void onResume() {
-        datasource.open();
-        super.onResume();
-    }
-
-    @Override
-    protected void onPause() {
-        datasource.close();
-        super.onPause();
     }
 }

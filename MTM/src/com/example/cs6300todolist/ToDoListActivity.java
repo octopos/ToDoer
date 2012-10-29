@@ -19,7 +19,6 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ListView;
 import android.widget.PopupMenu;
-
 import com.example.database.DueDateComparator;
 import com.example.database.PriorityComparator;
 import com.example.database.ToDoItem;
@@ -56,7 +55,7 @@ public class ToDoListActivity extends Activity {
     public boolean getHide() {
         return this.hide;
     }
-
+   
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,7 +72,7 @@ public class ToDoListActivity extends Activity {
         hide = false;
         sortType = SORT_DUEDATE;
         itemdatasource = new ToDoItemDataSource(this);
-        itemdatasource.open();
+   
         final List<ToDoItem> todoList = getNewList();
         final CheckBox cb = (CheckBox) findViewById(R.id.checkBoxHide);
         cb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -156,7 +155,7 @@ public class ToDoListActivity extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
         case R.id.menu_sync:
-        	// Place code in here to explicitly sync to web
+        	itemdatasource.synchronizeChanges();
             return true;
         case R.id.menu_duedate:
             sortType = SORT_DUEDATE;

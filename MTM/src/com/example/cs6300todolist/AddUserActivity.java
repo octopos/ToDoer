@@ -17,15 +17,14 @@ import com.example.database.Users;
 
 public class AddUserActivity extends Activity {
 
-    private UserDataSource datasource;
+    private UserDataSource userdatasource;
     private long userId = 0;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_user);
-        datasource = new UserDataSource(this);
-        datasource.open();
+        userdatasource = new UserDataSource(this);
         userId = getIntent().getLongExtra("com.example.cs6300todolist.userid",
                 0);
         if (userId == 0) {
@@ -33,7 +32,7 @@ public class AddUserActivity extends Activity {
         } else {
             this.setTitle("Change Password");
             final EditText user_name_EditText = (EditText) findViewById(R.id.editText1);
-            Users user = datasource.getUserById(userId);
+            Users user = userdatasource.getUserById(userId);
             user_name_EditText.setText(user.getName());
             user_name_EditText.setEnabled(false);
             final Button addButton = (Button) findViewById(R.id.button1);
@@ -74,8 +73,8 @@ public class AddUserActivity extends Activity {
                         .trim();
                 if (pwdStr.equals(confirm_pwdStr)) {
                     if (userId == 0) {
-                        if (datasource.selectUser(userName) == null) {
-                            if (datasource.createUsers(userName,
+                        if (userdatasource.selectUser(userName) == null) {
+                            if (userdatasource.createUsers(userName,
                                     PwdEncrypt.encrypt(pwdStr)) != null) {
                                 Toast toast = Toast.makeText(this,
                                         "User created.", Toast.LENGTH_LONG);
@@ -107,11 +106,9 @@ public class AddUserActivity extends Activity {
                         updateUser.setId(userId);
                         updateUser.setName(userName);
                         updateUser.setPwd(PwdEncrypt.encrypt(pwdStr));
-                        if (datasource.updateUsers(updateUser) > 0) {
                             Toast toast = Toast.makeText(this,
                                     "Password changed.", Toast.LENGTH_LONG);
                             toast.show();
-                        }
                         setResult(RESULT_OK);
                         finish();
                     }
