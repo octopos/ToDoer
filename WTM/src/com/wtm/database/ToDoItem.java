@@ -5,12 +5,32 @@ public class ToDoItem {
 	  private long userId;
 	  private String name;
 	  private String note;
-	 // private String duedate;
+	 
 	  private long dueTime;
 	  private boolean checked; 
 	  private boolean noDueTime;
 	  private long priority;
+	  //Modified .. Remove in final!
+	  private String dueDate;
+	  private String dueTime2;
+	  public String getDueDate() {
+		return dueDate;
+	}
 
+	public void setDueDate(String duedate) {
+		this.dueDate = duedate;
+	}
+
+	public String getDueTime2() {
+		return dueTime2;
+	}
+
+	public void setDueTime2(String dueTime2) {
+		this.dueTime2 = dueTime2;
+	}
+
+	//End remove.
+	  
 	  public long getId() {
 	    return id;
 	  }
