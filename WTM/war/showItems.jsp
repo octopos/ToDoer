@@ -34,11 +34,10 @@
         <p>Items in database.</p>
         <%
         for (Entity singleItem : items) {
-       		long temp = ToDoItemDataSource.getUserID((String)session.getAttribute("User"));
-        	pageContext.setAttribute("item_uid",temp);
         	pageContext.setAttribute("item_key",singleItem.getKey());
-        	
         	String user = (String)singleItem.getProperty("Username"); //test string cast - Works!
+        	long temp = ToDoItemDataSource.getUserID(user);
+        	pageContext.setAttribute("item_uid",temp);
         	pageContext.setAttribute("item_user" ,user);
         	pageContext.setAttribute("item_name" ,
         			singleItem.getProperty("Taskname"));
@@ -84,5 +83,25 @@
 		   <%
 	   }
 %>
+<p>what!!???</p>
+<%	
+	List <ToDoItem> list3 = ToDoItemDataSource.getInstance().getAllToDo();
+	    Iterator<ToDoItem> it3 = list3.iterator();
+	    ToDoItem temp3;
+	   while(it3.hasNext())
+	   {
+			temp3 = it3.next();
+		   %><p>abcd</p><%=temp3.getId()%>:<%=temp3.getUserId()%>:Name-<%=temp3.getName()%>:<%=temp3.getNote()%>:<%=temp3.getPriority()%><br/>
+		   <%
+	   }
+%>
+<%	
+	    	ToDoItem temp4 = ToDoItemDataSource.getInstance().getItemByItemId(19);
+		   %><p>abcd</p><%=temp4.getId()%>:<%=temp4.getUserId()%>:Name-<%=temp4.getName()%>:<%=temp4.getNote()%>:<%=temp4.getPriority()%><br/>
+		   
+		   <%
+		   //ToDoItemDataSource.getInstance().deleteItem(temp4);
+%>
+
   </body>
 </html>

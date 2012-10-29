@@ -26,7 +26,18 @@ public class ToDoItemDataSource {
 	  
 	  
 	  public ToDoItem getItemByItemId(long id) { //id 
-		  ToDoItem item = new ToDoItem(); 
+		  	ToDoItem item = null;
+		  	List<ToDoItem> list = getAllToDo();
+		  	Iterator<ToDoItem> it = list.iterator();
+		  	while(it.hasNext())
+		  	{
+		  		item = it.next();
+		  		if(item.getId() == id)
+		  		{
+		  			break;
+		  		}
+		  	}
+			
 		  return item;
 	  }
 	  
@@ -48,7 +59,9 @@ public class ToDoItemDataSource {
 	  }
 	  
 	  public void deleteItem(ToDoItem item) {
-		  
+		  	DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+			Key dbKey = KeyFactory.createKey("CDB", "itemDB");
+			datastore.delete(getItemID(item));
 	  }
 	  
 	  public void updateItem(ToDoItem item) {
@@ -111,20 +124,17 @@ public class ToDoItemDataSource {
 		  }
 	  
 	  public List<ToDoItem> getAllToDo() {
+		  	System.out.println("yay!");
 		  	DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-		  	List<ToDoItem> toDoList = new ArrayList<ToDoItem>();
-		  	String tempStr = "";
+		  	String tempStr;
 		    Key dbKey = KeyFactory.createKey("CDB", "itemDB");
-		    Filter existFltr = new FilterPredicate("Username" , FilterOperator.EQUAL , username );
-			Query query = new Query("items" , dbKey).setFilter(existFltr);
+		    List<ToDoItem> list = new ArrayList<ToDoItem>();
+		    Query query = new Query("items", dbKey).addSort("Taskname", Query.SortDirection.DESCENDING);
 		    List<Entity> items = datastore.prepare(query).asList(FetchOptions.Builder.withDefaults());
-		    long uid = getUserID(username);
 		    System.out.println(items.size());
 		    if (!items.isEmpty()) {
-		        //int count = 1; 
 		        for (Entity singleItem : items) {
 		        	ToDoItem temp = new ToDoItem();
-		        	//temp.setUserId(count++);
 		        	Pattern pattern = Pattern.compile("\\(.+?\\)");
 		            Matcher matcherValidity = pattern.matcher(singleItem.getKey().toString());
 		            if(matcherValidity.find(5)){
@@ -133,6 +143,7 @@ public class ToDoItemDataSource {
 		            	tempStr = tempStr.replace(")","");
 		                temp.setId(Long.parseLong(tempStr));
 		            }
+		            long uid = getUserID((String)singleItem.getProperty("Username"));
 		        	temp.setUserId(uid);
 		        	temp.setName((String)singleItem.getProperty("Taskname"));
 		        	//temp.setName("abcd");
@@ -140,13 +151,38 @@ public class ToDoItemDataSource {
 		        	//temp.setDueTime(singleItem.getProperty("Date"));
 		        	temp.setChecked((Boolean) singleItem.getProperty("Checked"));
 		        	temp.setPriority((Long)singleItem.getProperty("Priority"));
-		        	toDoList.add(temp);
+		        	list.add(temp);
+		        }
 		    }
-		    }
-		    List<ToDoItem> list = new ArrayList<ToDoItem>();
 		    return list;
 		  }
-	  
+	  //extra functions
+	  public static Key getItemID(ToDoItem item){
+		  	long id = 0;
+		  	Key itemid = null; 
+		  	String temp;
+		  	DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+		  	Key dbKey = KeyFactory.createKey("CDB", "itemDB");
+			Filter existFltr = new FilterPredicate("Taskname" , FilterOperator.EQUAL , item.getName() );
+			Query query = new Query("items" , dbKey).setFilter(existFltr);
+			List<Entity> itemExists = datastore.prepare(query).asList(FetchOptions.Builder.withDefaults());
+			if( !itemExists.isEmpty() )
+			{
+				for( Entity thisItem: itemExists ){
+				        	Pattern pattern = Pattern.compile("\\(.+?\\)");
+				            Matcher matcherValidity = pattern.matcher(thisItem.getKey().toString());
+				            if(matcherValidity.find(5)){
+				            	temp = matcherValidity.group(0);
+				            	temp = temp.replace("(", "");
+				            	temp = temp.replace(")","");
+				                id = Long.parseLong(temp);
+				                if(id == item.getId())
+				                	itemid = thisItem.getKey();
+				            }
+				}
+			}
+		  return itemid;
+	  }
 	  public static long getUserID(String username){
 		  long userid = 0;
 		  String temp = "";
