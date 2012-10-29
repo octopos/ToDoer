@@ -5,6 +5,7 @@ public class ToDoItem {
 	  private long userId;
 	  private String name;
 	  private String note;
+	 // private String duedate;
 	  private long dueTime;
 	  private boolean checked; 
 	  private boolean noDueTime;

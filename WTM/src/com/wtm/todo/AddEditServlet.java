@@ -44,7 +44,7 @@ public class AddEditServlet extends HttpServlet {
 //			item.setProperty("Time", time);
 //			item.setProperty("Priority", priority);
 //			datastore.put(item);
-			resp.sendRedirect("list.jsp?time="+time+"&date="+date);
+			resp.sendRedirect("list.jsp");
 	}
 
 }
