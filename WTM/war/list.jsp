@@ -124,8 +124,9 @@
 			
 			<td>
 			<form action="addEdit" method="post" >
+			<input type="hidden" name="id" value=<%=tasks.getId()%>>
 			<input type="submit" onclick="return confirmDelete()" name="method" value="Delete"/>
-			<input type="hidden" name="id" value=<%=id%>>
+			
 			
 			
 				

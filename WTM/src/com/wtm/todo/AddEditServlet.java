@@ -25,10 +25,12 @@ public class AddEditServlet extends HttpServlet {
 		if(method.equals("Delete"))
 		{
 			ToDoItemDataSource instance = ToDoItemDataSource.getInstance();
+			System.out.println("here");
 			instance.deleteItem(instance.getItemByItemId(Long.parseLong(req.getParameter("id"))));
+			System.out.println("again here");
 			resp.sendRedirect("list.jsp");
 		}
-		
+		else{
 		String user = (String) session.getAttribute("User");
 		String name = req.getParameter("taskname");
 		String note = req.getParameter("note");
@@ -74,6 +76,7 @@ public class AddEditServlet extends HttpServlet {
 //			item.setProperty("Priority", priority);
 //			datastore.put(item);
 			resp.sendRedirect("list.jsp");
+	}
 	}
 
 }

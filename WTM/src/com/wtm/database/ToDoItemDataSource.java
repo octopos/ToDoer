@@ -62,6 +62,7 @@ public class ToDoItemDataSource {
 		  	DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 			Key dbKey = KeyFactory.createKey("CDB", "itemDB");
 			datastore.delete(getItemID(item));
+			System.out.println("deleting here");
 	  }
 	  
 	  public void updateItem(ToDoItem item) {
