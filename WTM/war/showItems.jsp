@@ -68,7 +68,7 @@
 	   while(it.hasNext())
 	   {
 			temp = it.next();
-		   %><%=temp.getId()%>:<%=temp.getUserId()%>:Name-<%=temp.getName()%>:<%=temp.getNote()%>:<%=temp.getPriority()%><br/>
+		   %><%=temp.getId()%>:<%=temp.getUserId()%>:Name-<%=temp.getName()%>:<%=temp.getNote()%>:<%=temp.getPriority()%>  <%=temp.isChecked()%><br/>
 		   <%
 	   }
 %>

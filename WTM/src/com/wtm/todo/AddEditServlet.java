@@ -9,7 +9,6 @@ import javax.servlet.http.HttpSession;
 
 import com.wtm.database.ToDoItem;
 import com.wtm.database.ToDoItemDataSource;
-import com.wtm.database.UserDataSource;
 
 @SuppressWarnings("serial")
 
