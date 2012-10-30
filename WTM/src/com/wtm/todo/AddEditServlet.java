@@ -7,7 +7,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.wtm.database.ToDoItem;
 import com.wtm.database.ToDoItemDataSource;
+import com.wtm.database.UserDataSource;
 
 @SuppressWarnings("serial")
 
@@ -25,8 +27,34 @@ public class AddEditServlet extends HttpServlet {
 		String date = req.getParameter("datepicker");
 		String time = req.getParameter("timepicker");
 		int priority = Integer.parseInt(req.getParameter("priority"));
-		ToDoItemDataSource instance = ToDoItemDataSource.getInstance();
-		instance.createItem(user,name, note, date, time, priority);
+		String method = req.getParameter("method");
+		if(method.equals("Edit"))
+		{
+			ToDoItemDataSource instance = ToDoItemDataSource.getInstance();
+			ToDoItem todo = new ToDoItem();
+			todo.setId(Long.parseLong(req.getParameter("id")));
+			todo.setName(name);
+			todo.setUserId(ToDoItemDataSource.getUserID((String)session.getAttribute("User")));
+			if (date.endsWith("/")) {
+				date = date.substring(0, date.length() - 1);
+			}
+			System.out.println(date);
+			todo.setDueDate(date);
+			todo.setDueTime2(time);
+			todo.setPriority(priority);
+			todo.setNote(note);
+			instance.updateItem(todo);
+		}
+		else if(method.equals("Add"))
+		{
+			ToDoItemDataSource instance = ToDoItemDataSource.getInstance();
+			instance.createItem(user,name, note, date, time, priority);
+		}
+		else if(method.equals("Delete"))
+		{
+			ToDoItemDataSource instance = ToDoItemDataSource.getInstance();
+			instance.deleteItem(instance.getItemByItemId(Long.parseLong(req.getParameter("id"))));
+		}
 //		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 //		Key dbKey = KeyFactory.createKey("CDB", "itemsDB");
 //		Filter existFltr = new FilterPredicate("Taskname" , FilterOperator.EQUAL , name );

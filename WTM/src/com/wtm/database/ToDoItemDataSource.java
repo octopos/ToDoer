@@ -65,9 +65,38 @@ public class ToDoItemDataSource {
 	  }
 	  
 	  public void updateItem(ToDoItem item) {
-			DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+		  DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 			Key dbKey = KeyFactory.createKey("CDB", "itemDB");
-			datastore.delete(getItemID(item));
+			Query query = new Query("items", dbKey).addSort("Taskname", Query.SortDirection.DESCENDING);
+			List<Entity> itemExists = datastore.prepare(query).asList(FetchOptions.Builder.withDefaults());
+			String temp;
+			long id;
+			if( !itemExists.isEmpty() )
+			{
+				for(Entity thisItem : itemExists)
+				{
+					Pattern pattern = Pattern.compile("\\(.+?\\)");
+		            Matcher matcherValidity = pattern.matcher(thisItem.getKey().toString());
+		            if(matcherValidity.find(5)){
+		            	temp = matcherValidity.group(0);
+		            	temp = temp.replace("(", "");
+		            	temp = temp.replace(")","");
+		                id = Long.parseLong(temp);
+		                if(id == item.getId())
+		                	{
+		                		Users user = new UserDataSource().getUserById(id);
+		                		thisItem.setProperty("Username",user.getName());
+		                		thisItem.setProperty("Taskname",item.getName());
+		                		thisItem.setProperty("Note", item.getNote());
+		                		thisItem.setProperty("Date", item.getDueDate());
+		                		thisItem.setProperty("Time", item.getDueTime2());
+		                		thisItem.setProperty("Priority",item.getPriority());
+		                		thisItem.setProperty("Checked", item.isChecked() );
+		                		datastore.put(thisItem);
+		                	}
+		            }
+				}
+			}
 	  }
 
 
