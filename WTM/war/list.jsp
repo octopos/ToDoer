@@ -24,7 +24,6 @@
 </head>
 
 <script language="javascript" type="text/javascript">
-	var hideToggle = false;
 	
 	function confirmDelete(){
 		var r = confirm("Are you sure you want to delete this item?");
@@ -39,7 +38,20 @@
 	}
    	
    	function hideCompleted(){
-   		hideToggle = !hideToggle;
+   		var inputs = document.getElementsByTagName("input");
+   		
+   		for( var i = 0 ; i < inputs.length ; ++i ){
+   			if( inputs[i].type == "checkbox" && inputs[i].name == "taskCkbo" && inputs[i].checked ){
+   				if (document.getElementById("row"+inputs[i].id).style.display == 'none') {
+   					document.getElementById("row"+inputs[i].id).style.display = '';
+   			 	}
+   			 	else {
+   			  		document.getElementById("row"+inputs[i].id).style.display = 'none';
+   				}
+   			}
+   		}
+   		
+   		
    	}
 </script>
 
@@ -52,27 +64,26 @@
 				<table class="bottomBorder" cellpadding="5">
 					<tr>
 						<td colspan="5">
-							<input type="checkbox" id="hide" name=false> Hide Completed?
+							<input type="checkbox" onClick="return hideCompleted()"> Hide Completed?
 						</td>
 					</tr>
-					<tr>
-						<%	boolean hide = false;
+						<%	
 							long id = 0;
 							long tid = 0;
 							id = ToDoItemDataSource.getUserID((String)session.getAttribute("User"));
 							List <ToDoItem> list = ToDoItemDataSource.getInstance().getToDoListByUId((String)session.getAttribute("User"));
 							Iterator<ToDoItem> it = list.iterator();
 							ToDoItem tasks;
-							   
+							
 							while(it.hasNext())
 							{
 								tasks = it.next();
 								//request.setAttribute("tasksString", tasks);
-								
 	   					%>
+					<tr id="row<%=tasks.getId()%>" >
 						<td>
-							<input type="checkbox" onClick="checkIt(this)"
-								id="<%=tasks.getId()%>" <%=tasks.isChecked()?"checked":""%>>
+							<input type="checkbox" name="taskCkbo" onClick="checkIt(this)"
+								id="<%=tasks.getId()%>" <%=tasks.isChecked()?"checked":""%>> 
 						</td>
 						<td><%=tasks.getName()%></td>
 						<td>
@@ -109,35 +120,21 @@
 								<input type="submit" onclick="return confirmDelete()"
 									name="method" value="Delete" />
 							</form>
-
 						</td>
 					</tr>
 
 					<%
-            } 
-            %>
-
+           			} 
+           			%>
 				</table>
-
 			</td>
 			<td>
-
 				<table align="right">
 					<tr>
 						<td align="right">
 							<form action="AddEdit.jsp" method="post">
 								<input type="submit" value="Add task">
 							</form>
-						</td>
-					</tr>
-					<tr>
-						<td align="right"><input type="button"
-							value="Hide Completed" onclick="<%hide=!hide;%>">
-						</td>
-					</tr>
-					<tr>
-						<td align="right"><input type="button"
-							value="Is Hide?" onclick="alert(<%=hide%>)">
 						</td>
 					</tr>
 					<tr>
