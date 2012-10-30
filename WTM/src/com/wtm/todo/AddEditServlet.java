@@ -25,10 +25,17 @@ public class AddEditServlet extends HttpServlet {
 		if(method.equals("Delete"))
 		{
 			ToDoItemDataSource instance = ToDoItemDataSource.getInstance();
-			System.out.println("here");
+			//System.out.println("here");
 			instance.deleteItem(instance.getItemByItemId(Long.parseLong(req.getParameter("id"))));
-			System.out.println("again here");
+			//System.out.println("again here");
 			resp.sendRedirect("list.jsp");
+		}
+		if(method.equals("Check"))
+		{
+			ToDoItemDataSource instance = ToDoItemDataSource.getInstance();
+			System.out.println("Checking here");
+			instance.checkIt(Long.parseLong(req.getParameter("id")), Boolean.parseBoolean((String)req.getParameter("check")));
+			//System.out.println("Checking again here");
 		}
 		else{
 		String user = (String) session.getAttribute("User");

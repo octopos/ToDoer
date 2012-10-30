@@ -24,25 +24,18 @@
 <link rel="stylesheet" type="text/css" href="../Resources/wtmStyles.css">
 </head>
 
-<script>
+<script language="javascript" type="text/javascript">
 	function confirmDelete(){
 		var r = confirm("Are you sure you want to delete this item?");
 		return r;
 	}
-	 
-     
-	    function sortByDate(List<ToDoItems> items)
-	    {
-	    	
-	    	Collections.sort(items, new DueDateComparator());
-	        
-	    }
-	    function sortByPriority(List<ToDoItems> items) 
-	    {
-	    	
-	    	Collections.sort(items, new PriorityComparator());  	
-	    }
-	   	
+	   	function checkIt(cb){
+		 	var xmlHttp = null;
+    		xmlHttp = new XMLHttpRequest();
+    		xmlHttp.open( "GET", "addEdit?id=" + cb.id +"&method=Check&check=" + cb.checked, false );
+    		xmlHttp.send();
+    		
+	}
 </script>
 	
     <body>
@@ -73,7 +66,7 @@
 		//request.setAttribute("tasksString", tasks);
 	   %> 
 	   <td>
-	   <input type="checkbox"> 
+	   <input type="checkbox" onClick="checkIt(this)" id="<%=tasks.getId()%>" value=<%=tasks.isChecked()%>> 
 	   </td>
 	   
 	   <td>

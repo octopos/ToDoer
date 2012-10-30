@@ -198,6 +198,14 @@ public class ToDoItemDataSource {
 		    return list;
 		  }
 	  //extra functions
+	  
+	  public void checkIt(long id,boolean check) //calls the update with the value of check
+	  {
+		  ToDoItem item = getItemByItemId(id);
+		  item.setChecked(check);
+		  this.updateItem(item);
+		  
+	  }
 	  public static Key getItemID(ToDoItem item){
 		  	long id = 0;
 		  	Key itemid = null; 
