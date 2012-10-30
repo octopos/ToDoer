@@ -150,7 +150,7 @@ public class ToDoItemDataSource {
 		    while(it.hasNext())
 		    {
 		    	temp = it.next();
-		    	if(temp.isChecked())
+		    	if(!temp.isChecked())
 		    	{
 		    		list.add(temp);
 		    	}
