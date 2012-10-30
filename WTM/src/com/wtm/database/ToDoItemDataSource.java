@@ -83,8 +83,9 @@ public class ToDoItemDataSource {
 		            	temp = temp.replace(")","");
 		                id = Long.parseLong(temp);
 		                if(id == item.getId())
-		                	{
-		                		Users user = new UserDataSource().getUserById(id);
+		                	{	System.out.println("id in todo:"+id);
+		                		Users user = new UserDataSource().getUserById(item.getUserId());
+		                		System.out.println("abcd:"+user.getName());
 		                		thisItem.setProperty("Username",user.getName());
 		                		thisItem.setProperty("Taskname",item.getName());
 		                		thisItem.setProperty("Note", item.getNote());

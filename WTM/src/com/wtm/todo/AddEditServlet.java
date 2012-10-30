@@ -21,13 +21,21 @@ public class AddEditServlet extends HttpServlet {
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException {
 		HttpSession session = req.getSession(true);
+		String method = req.getParameter("method");
+		if(method.equals("Delete"))
+		{
+			ToDoItemDataSource instance = ToDoItemDataSource.getInstance();
+			instance.deleteItem(instance.getItemByItemId(Long.parseLong(req.getParameter("id"))));
+			resp.sendRedirect("list.jsp");
+		}
+		
 		String user = (String) session.getAttribute("User");
 		String name = req.getParameter("taskname");
 		String note = req.getParameter("note");
 		String date = req.getParameter("datepicker");
 		String time = req.getParameter("timepicker");
 		int priority = Integer.parseInt(req.getParameter("priority"));
-		String method = req.getParameter("method");
+		
 		if(method.equals("Edit"))
 		{
 			ToDoItemDataSource instance = ToDoItemDataSource.getInstance();
@@ -35,6 +43,7 @@ public class AddEditServlet extends HttpServlet {
 			todo.setId(Long.parseLong(req.getParameter("id")));
 			todo.setName(name);
 			todo.setUserId(ToDoItemDataSource.getUserID((String)session.getAttribute("User")));
+			System.out.println("uid:"+todo.getUserId());
 			if (date.endsWith("/")) {
 				date = date.substring(0, date.length() - 1);
 			}
@@ -50,11 +59,7 @@ public class AddEditServlet extends HttpServlet {
 			ToDoItemDataSource instance = ToDoItemDataSource.getInstance();
 			instance.createItem(user,name, note, date, time, priority);
 		}
-		else if(method.equals("Delete"))
-		{
-			ToDoItemDataSource instance = ToDoItemDataSource.getInstance();
-			instance.deleteItem(instance.getItemByItemId(Long.parseLong(req.getParameter("id"))));
-		}
+		
 //		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 //		Key dbKey = KeyFactory.createKey("CDB", "itemsDB");
 //		Filter existFltr = new FilterPredicate("Taskname" , FilterOperator.EQUAL , name );
