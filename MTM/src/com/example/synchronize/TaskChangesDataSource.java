@@ -1,6 +1,8 @@
 package com.example.synchronize;
 
 import java.util.ArrayList;
+import java.util.Date;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -34,7 +36,7 @@ public class TaskChangesDataSource {
 		values.put(MySQLiteHelper.COLUMN_TCTASKID, change.getTaskID());
 		values.put(MySQLiteHelper.COLUMN_TCACTION, change.getAction()
 				.toString());
-		values.put(MySQLiteHelper.COLUMN_TCTIME, change.getTimestamp());
+		values.put(MySQLiteHelper.COLUMN_TCTIME, change.getTimestamp().toString());
 		database.insert(MySQLiteHelper.TABLE_TASKCHANGES, null, values);
 		System.out.println("Created change item for "+change.getTaskID());
 		close();
@@ -57,10 +59,10 @@ public class TaskChangesDataSource {
 		return result;
 	}
 
-	public void updateTaskChange(long taskid, String time) {
+	public void updateTaskChange(long taskid, Date time) {
 		open();
 		ContentValues values = new ContentValues();
-		values.put(MySQLiteHelper.COLUMN_TCTIME, time);
+		values.put(MySQLiteHelper.COLUMN_TCTIME, time.toString());
 		database.update(MySQLiteHelper.TABLE_TASKCHANGES, values,
 				MySQLiteHelper.COLUMN_TCTASKID + " = " + taskid, null);
 		System.out.println("Updated change item for "+taskid);

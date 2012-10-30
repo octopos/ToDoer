@@ -25,7 +25,7 @@ public class ToDoItemDataSource {
 
 	public ToDoItemDataSource(Context context) {
 		dbHelper = new MySQLiteHelper(context);
-		tracker = new ChangeTracker(context);
+		tracker = new ChangeTracker(context,this);
 	}
 
 	public void open() throws SQLException {
@@ -83,22 +83,61 @@ public class ToDoItemDataSource {
 		ToDoItem newItem = cursorToToDoItem(cursor);
 		cursor.close();
 		close();
-		tracker.createItemChange(newItem);
+		tracker.taskCreatedChange(newItem);
 		return newItem;
 	}
 
+	public ToDoItem createItemWithId(String taskid, String userid, String name, String note,
+			String duetime, String noduetime, String checked, String priority) {
+		open();
+		ContentValues values = new ContentValues();
+		values.put(MySQLiteHelper.COLUMN_ID, taskid);
+		values.put(MySQLiteHelper.COLUMN_USERID, userid);
+		values.put(MySQLiteHelper.COLUMN_TODONAME, name);
+		values.put(MySQLiteHelper.COLUMN_TODONOTE, note);
+		values.put(MySQLiteHelper.COLUMN_DUETIME, duetime);
+		if (noduetime.equals("true"))
+			values.put(MySQLiteHelper.COLUMN_NODUETIME, 1);
+		else
+			values.put(MySQLiteHelper.COLUMN_NODUETIME, 0);
+		values.put(MySQLiteHelper.COLUMN_PRIORITY, priority);
+		if (checked.equals("true"))
+			values.put(MySQLiteHelper.COLUMN_CHECKED, 1);
+		else
+			values.put(MySQLiteHelper.COLUMN_CHECKED, 0);
+
+		long insertId = database.insert(MySQLiteHelper.TABLE_TODOLIST, null,
+				values);
+		Cursor cursor = database.query(MySQLiteHelper.TABLE_TODOLIST,
+				allColumns, MySQLiteHelper.COLUMN_ID + " = " + insertId, null,
+				null, null, null);
+		cursor.moveToFirst();
+		ToDoItem newItem = cursorToToDoItem(cursor);
+		cursor.close();
+		close();
+		return newItem;
+	}
+
+	
 	public void deleteItem(ToDoItem item) {
 		open();
-		tracker.deleteItemChange(item);
+		tracker.taskDeletedChange(item);
 		long id = item.getId();
 		database.delete(MySQLiteHelper.TABLE_TODOLIST, MySQLiteHelper.COLUMN_ID
 				+ " = " + id, null);
 		close();
 	}
+	
+	public void deleteItemById(Long itemid) {
+		open();
+		database.delete(MySQLiteHelper.TABLE_TODOLIST, MySQLiteHelper.COLUMN_ID
+				+ " = " + itemid, null);
+		close();
+	}
 
 	public int updateItem(ToDoItem item) {
 		open();
-		tracker.updateItemChange(item);
+		tracker.taskupdatedChange(item);
 		long id = item.getId();
 
 		ContentValues values = new ContentValues();

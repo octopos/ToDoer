@@ -1,12 +1,15 @@
-package com.example.synchronize;
+package com.wtm.sync;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import com.wtm.database.ToDoItem;
+
 @SuppressWarnings("serial")
 public class TaskChange implements Serializable {
 	long taskID;
+	ToDoItem item;
 	ActionType action;
 	Date timestamp;
 
@@ -17,6 +20,12 @@ public class TaskChange implements Serializable {
 												// and time
 	}
 
+	public TaskChange(String action, String time, String taskid, String userid, String name, String note,
+			String duetime, String noduetime, String checked, String priority)
+	{
+		
+	}
+	
 	@SuppressWarnings("deprecation")
 	public TaskChange(long taskID, String action, String time) {
 		this.taskID = taskID;

@@ -2,11 +2,8 @@ package com.example.database;
 
 import java.io.Serializable;
 
+@SuppressWarnings("serial")
 public class ToDoItem implements Serializable {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -4606027749169480484L;
 	private long id;
 	private long userId;
 	private String name;
@@ -16,6 +13,10 @@ public class ToDoItem implements Serializable {
 	private boolean noDueTime;
 	private long priority;
 
+	public String toSyncString() {
+		return id+"\t"+userId+"\t"+name+"\t"+note+"\t"+dueTime+"\t"+checked+"\t"+noDueTime+"\t"+priority;
+	}
+	
 	public long getId() {
 		return id;
 	}
@@ -29,7 +30,7 @@ public class ToDoItem implements Serializable {
 	public String toString() {
 		return name;
 	}
-
+	
 	public long getUserId() {
 		return userId;
 	}
