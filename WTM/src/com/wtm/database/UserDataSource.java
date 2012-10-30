@@ -81,6 +81,7 @@ public class UserDataSource {
 
 	public Users getUserById(long id) {
 		long tempId;
+		System.out.println("id="+id);
 		Users newUser = new Users();
 		Query query = new Query("users", dbKey).addSort("Username", Query.SortDirection.DESCENDING);
 		List<Entity> userExists = datastore.prepare(query).asList(FetchOptions.Builder.withDefaults());
@@ -97,6 +98,7 @@ public class UserDataSource {
 					temp = temp.replace("(", "");
 					temp = temp.replace(")","");
 					tempId = Long.parseLong(temp);
+					System.out.println("tempid="+id);
 					if(tempId == id)
 					{
 						newUser = entityToUser( thisUser );

@@ -52,6 +52,10 @@
 		long id = 0;
 		id = Long.parseLong(request.getParameter("id"));
 		ToDoItem item = ToDoItemDataSource.getInstance().getItemByItemId(id);
+		String dueDate = item.getDueDate();
+		if (dueDate.endsWith("/")) {
+    				dueDate = dueDate.substring(0, dueDate.length() - 1);
+		}
 	%>
 	<form name="frmCreateItem" onSubmit="validate()" action="addEdit" method="post">
 		<table align="center">
@@ -65,7 +69,7 @@
 			</tr>
 			<tr>
 				<td>Date:</td>
-				<td><input name="datepicker" type="text" id="datepicker" value=<%=item.getDueDate()%>/></td>
+				<td><input name="datepicker" type="text" id="datepicker" value=<%=dueDate%>/></td>
 			</tr>
 			<tr>
 				<td>Due Time:</td>
@@ -88,7 +92,7 @@
 				<td><form action="login.jsp" method="post">
 					<input type="submit" value="Cancel" /></form>
 				</td>
-				<td><input type="submit" value="Add" /></td>
+				<td><input type="hidden" name="id" value=<%=id%>><input type="hidden" name="method" value="Edit"/><input type="submit" value="Add" /></td>
 			</tr>
 		</table>
 	</form>
