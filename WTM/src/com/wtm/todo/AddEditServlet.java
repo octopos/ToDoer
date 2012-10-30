@@ -16,7 +16,7 @@ import com.wtm.database.UserDataSource;
 public class AddEditServlet extends HttpServlet {
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException {
-			resp.sendRedirect("error.html");
+			doPost(req, resp);
 		}
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException {
