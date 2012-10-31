@@ -24,7 +24,6 @@
 </head>
 
 <script language="javascript" type="text/javascript">
-	
 	function confirmDelete(){
 		var r = confirm("Are you sure you want to delete this item?");
 		return r;
@@ -49,8 +48,7 @@
    			  		document.getElementById("row"+inputs[i].id).style.display = 'none';
    				}
    			}
-   		}
-   		
+   		}   		
    		
    	}
 </script>
@@ -72,6 +70,23 @@
 							long tid = 0;
 							id = ToDoItemDataSource.getUserID((String)session.getAttribute("User"));
 							List <ToDoItem> list = ToDoItemDataSource.getInstance().getToDoListByUId((String)session.getAttribute("User"));
+							String sort = "";
+							if(request.getParameter("sort")!=null)
+							{
+								sort = request.getParameter("sort");
+								if(sort.equals("priority"))
+									{
+										%>
+										<p>abcd</p>
+										<%
+										//Collections.sort(list, new DueDateComparator());
+									}
+								else if(sort.equals("date"))
+									{	
+										System.out.println("date");
+										//Collections.sort(list, new PriorityComparator());
+									}
+								}
 							Iterator<ToDoItem> it = list.iterator();
 							ToDoItem tasks;
 							
@@ -139,12 +154,12 @@
 					</tr>
 					<tr>
 						<td align="right"><input type="button"
-							value="Sort by Priority" onclick="sortByPriority()">
+							value="Sort by Priority" onclick="window.location='list.jsp?sort=priority'">
 						</td>
 					</tr>
 					<tr>
 						<td align="right"><input type="button" value="Sort by Date"
-							onclick="sortByDate()">
+							onclick="window.location='list.jsp?sort=date'">
 						</td>
 					</tr>
 					<tr>
