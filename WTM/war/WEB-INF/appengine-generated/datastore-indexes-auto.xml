@@ -1,6 +1,6 @@
-<!-- Indices written at Wed, 31 Oct 2012 09:17:34 EDT -->
+<!-- Indices written at Wed, 31 Oct 2012 13:00:04 UTC -->
 
-<datastore-indexes>
+<datastore-indexes/>
 
     <!-- Used 1 time in query history -->
     <datastore-index kind="users" ancestor="true" source="auto">
