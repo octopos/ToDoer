@@ -64,7 +64,7 @@
 			<td valign="top">
 				<table class="bottomBorder" cellpadding="5">
 					<tr>
-						<td colspan="5">
+						<td colspan="6">
 							<input type="checkbox" onClick="return hideCompleted()"> Hide Completed?
 						</td>
 					</tr>
