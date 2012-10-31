@@ -101,6 +101,7 @@
 								id="<%=tasks.getId()%>" <%=tasks.isChecked()?"checked":""%>> 
 						</td>
 						<td><%=tasks.getName()%></td>
+						<td><%=tasks.getDueDate()%></td>
 						<td>
 							<%
 				               if(tasks.getPriority() == 1) 
