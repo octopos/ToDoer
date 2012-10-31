@@ -84,9 +84,9 @@
 			<tr>
 				<td>Priority:</td>
 				<td><input type="radio" name="priority" id="low" value="1"
-					<%if (item.getPriority() == 1) {%> checked <%}%> /><label for="low" /></label>
-					<img src="../Resources/circle_green.png" height="20"> <input
-					type="radio" name="priority" id="medium" value="2"
+					<%if (item.getPriority() == 1) {%> checked <%}%> /><label
+					for="low" /></label> <img src="../Resources/circle_green.png" height="20">
+					<input type="radio" name="priority" id="medium" value="2"
 					<%if (item.getPriority() == 2) {%> checked <%}%> /><label
 					for="medium" /></label> <img src="../Resources/circle_yellow.png"
 					height="20"> <input type="radio" name="priority" id="high"
@@ -94,15 +94,16 @@
 					for="high" /></label> <img src="../Resources/circle_red.png" height="20">
 				</td>
 			</tr>
-
 			<tr>
 				<!-- This is not correct, should move back to home screen -->
+				<td><input type="hidden" name="id" value=<%=id%> /> <input
+					type="hidden" name="method" value="Edit" /> <input type="submit"
+					value="Edit" /></td>
+
 				<td><form action="list.jsp" method="post">
 						<input type="submit" value="Cancel" />
 					</form></td>
-				<td><input type="hidden" name="id" value=<%=id%>><input
-					type="hidden" name="method" value="Edit" /><input type="submit"
-					value="Edit" /></td>
+
 			</tr>
 		</table>
 	</form>
