@@ -92,7 +92,7 @@
 				<td><form action="login.jsp" method="post">
 					<input type="submit" value="Cancel" /></form>
 				</td>
-				<td><input type="hidden" name="id" value=<%=id%>><input type="hidden" name="method" value="Edit"/><input type="submit" value="Add" /></td>
+				<td><input type="hidden" name="id" value=<%=id%>><input type="hidden" name="method" value="Edit"/><input type="submit" value="Edit" /></td>
 			</tr>
 		</table>
 	</form>
