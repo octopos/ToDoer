@@ -77,7 +77,7 @@
 								if(sort.equals("priority"))
 									{
 										%>
-										<p>abcd</p>
+										<b>testing</b>
 										<%
 										//Collections.sort(list, new DueDateComparator());
 									}

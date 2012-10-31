@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -21,8 +20,8 @@ public class SyncServlet extends HttpServlet {
 		StringBuilder stringBuilder = new StringBuilder("Empty string");
 		BufferedReader requestReader = null;
 		PrintWriter responseWriter = resp.getWriter();
-		ArrayList<TaskChange> changesList = new ArrayList<TaskChange>();
-		TaskChange newChange;
+		//ArrayList<TaskChange> changesList = new ArrayList<TaskChange>();
+		//TaskChange newChange;
 		// System.out.println("Got writer");
 		try {
 			InputStream inputStream = req.getInputStream();
