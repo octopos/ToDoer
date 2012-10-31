@@ -4,13 +4,6 @@ import java.util.List;
 
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.DatastoreService;
-import com.google.appengine.api.datastore.Key;
-import com.google.appengine.api.datastore.KeyFactory;
-import com.google.appengine.api.datastore.Query.Filter;
-import com.google.appengine.api.datastore.Query.FilterPredicate;
-import com.google.appengine.api.datastore.Query.FilterOperator;
-import com.google.appengine.api.datastore.Query.CompositeFilter;
-import com.google.appengine.api.datastore.Query.CompositeFilterOperator;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Entity;
@@ -22,7 +15,6 @@ public class Test {
  {
 	 	DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 	
-	    Key dbKey = KeyFactory.createKey("CDB", "itemsDB");
 	    // Run an ancestor query to ensure we see the most up-to-date
 	    // view of the Greetings belonging to the selected Guestbook.
 	    Query q = new Query("Item").addSort("Taskname", SortDirection.ASCENDING);

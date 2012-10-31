@@ -18,7 +18,6 @@ public class UpdateAccountServlet extends HttpServlet {
 			throws IOException {
 		if( req.getParameter("button").equals("Submit") ){
 			String name = req.getParameter("username");
-			String password1 = req.getParameter("password1");
 			UserDataSource uds = new UserDataSource();				
 			
 			if( uds.userExists(name) )

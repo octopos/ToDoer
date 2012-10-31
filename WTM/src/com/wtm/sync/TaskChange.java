@@ -1,7 +1,6 @@
 package com.wtm.sync;
 
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import com.wtm.database.ToDoItem;
