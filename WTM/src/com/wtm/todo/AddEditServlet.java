@@ -29,7 +29,7 @@ public class AddEditServlet extends HttpServlet {
 			//System.out.println("again here");
 			resp.sendRedirect("list.jsp");
 		}
-		if(method.equals("Check"))
+		else if(method.equals("Check"))
 		{
 			ToDoItemDataSource instance = ToDoItemDataSource.getInstance();
 			System.out.println("Checking here");
