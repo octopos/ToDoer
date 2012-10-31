@@ -12,6 +12,9 @@
 <%@ page import="com.google.appengine.api.datastore.KeyFactory"%>
 <%@ page import="com.wtm.database.ToDoItem"%>
 <%@ page import="com.wtm.database.ToDoItemDataSource"%>
+<%@ page import="com.wtm.todo.PriorityComparator"%>
+<%@ page import="com.wtm.todo.DueDateComparator"%>
+<%@ page import="java.util.Collections"%>
 <%@ page import="java.util.Iterator"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
@@ -76,15 +79,13 @@
 								sort = request.getParameter("sort");
 								if(sort.equals("priority"))
 									{
-										%>
-										<p>abcd</p>
-										<%
-										//Collections.sort(list, new DueDateComparator());
+										Collections.sort(list, new PriorityComparator());
+										
 									}
 								else if(sort.equals("date"))
 									{	
 										System.out.println("date");
-										//Collections.sort(list, new PriorityComparator());
+										Collections.sort(list, new DueDateComparator());
 									}
 								}
 							Iterator<ToDoItem> it = list.iterator();
