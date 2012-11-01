@@ -1,6 +1,10 @@
 package com.wtm.database;
 
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -44,14 +48,14 @@ public class ToDoItemDataSource {
 	}
 
 
-	public void createItem(String user,String name,String note, String date, String time, long priority) { //change to values
+	public void createItem(String user,String name,String note, String date, long priority) { //change to values
 		boolean checked = false;
 		Entity item = new Entity("items" , dbKey);
 		item.setProperty("Username",user);
 		item.setProperty("Taskname", name);
 		item.setProperty("Note", note);
 		item.setProperty("Date", date);
-		item.setProperty("Time", time);
+		//item.setProperty("Time", time);
 		item.setProperty("Priority", priority);
 		item.setProperty("Checked", checked );
 		datastore.put(item);
@@ -80,7 +84,7 @@ public class ToDoItemDataSource {
 					thisItem.setProperty("Taskname",item.getName());
 					thisItem.setProperty("Note", item.getNote());
 					thisItem.setProperty("Date", item.getDueDate());
-					thisItem.setProperty("Time", item.getDueTime2());
+					//thisItem.setProperty("Time", item.getDueTime2());
 					thisItem.setProperty("Priority",item.getPriority());
 					thisItem.setProperty("Checked", item.isChecked() );
 					datastore.put(thisItem);
@@ -108,7 +112,13 @@ public class ToDoItemDataSource {
 				temp.setNote((String)singleItem.getProperty("Note"));
 				//Remove this
 				temp.setDueDate((String)singleItem.getProperty("Date"));
-				temp.setDueTime2((String)singleItem.getProperty("Time"));
+				String date = (String)singleItem.getProperty("Date");
+				if(!date.isEmpty())
+				{
+					temp.setDueTime(this.dateToEpoch((String)singleItem.getProperty("Date")));
+					System.out.print(temp.getDueTime());
+				}
+				//temp.setDueTime2((String)singleItem.getProperty("Time"));
 				//End Remove
 				temp.setChecked((Boolean) singleItem.getProperty("Checked"));
 				temp.setPriority((Long)singleItem.getProperty("Priority"));
@@ -153,8 +163,14 @@ public class ToDoItemDataSource {
 				//Remove this
 				temp.setDueDate((String)singleItem.getProperty("Date"));
 				System.out.println((String)singleItem.getProperty("Date"));
-				temp.setDueTime2((String)singleItem.getProperty("Time"));
-				System.out.println((String)singleItem.getProperty("Time"));
+				String date = (String)singleItem.getProperty("Date"); 
+				if(!date.isEmpty())
+					{
+						temp.setDueTime(this.dateToEpoch((String)singleItem.getProperty("Date")));
+						System.out.print(temp.getDueTime());
+					}
+				//temp.setDueTime2((String)singleItem.getProperty("Time"));
+				//System.out.println((String)singleItem.getProperty("Time"));
 				//End Remove
 				temp.setChecked((Boolean) singleItem.getProperty("Checked"));
 				temp.setPriority((Long)singleItem.getProperty("Priority"));
@@ -164,7 +180,19 @@ public class ToDoItemDataSource {
 		return list;
 	}
 	//extra functions
-
+	public long dateToEpoch(String dateStr)
+	{
+		SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+		Date date = null;
+		try {
+			date = df.parse(dateStr);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		long epoch = date.getTime();
+		return epoch;
+	}
 	public void checkIt(long id,boolean check) //calls the update with the value of check
 	{
 		ToDoItem item = getItemByItemId(id);

@@ -33,10 +33,10 @@
     });
     function validate()
     {
-        if(trim(document.frmCreateItem.taskname.value)=="")
+        if(document.frmCreateItem.taskname.value=="")
         {
           alert("Taskname cannot be empty!");
-          document.frmCreateAcct.username.focus();
+          document.frmCreateItem.taskname.focus();
           error = "You must have a taskname";
           return false;
         }
@@ -47,7 +47,7 @@
 </head>
 <body>
 	<h1 class="titleStyle">Do-D-Due</h1>
-	<form name="frmCreateItem" onSubmit="return validate();" action="/addEdit" method="post">
+	<form name="frmCreateItem"  action="/addEdit" method="post" onsubmit="return validate()" >
 		<table align="center">
 			<tr>
 				<td>Task Name:</td>
@@ -60,10 +60,6 @@
 			<tr>
 				<td>Date:</td>
 				<td><input type="text" name="datepicker" id="datepicker"/></td>
-			</tr>
-			<tr>
-				<td>Due Time:</td>
-				<td><input name="timepicker" id="timepicker"value="" /> <br/></td> 
 			</tr>
 			<tr>
 				<td>Priority:</td>

@@ -41,7 +41,7 @@ public class AddEditServlet extends HttpServlet {
 		String name = req.getParameter("taskname");
 		String note = req.getParameter("note");
 		String date = req.getParameter("datepicker");
-		String time = req.getParameter("timepicker");
+		//String time = req.getParameter("timepicker");
 		int priority = Integer.parseInt(req.getParameter("priority"));
 		
 		if(method.equals("Edit"))
@@ -57,7 +57,7 @@ public class AddEditServlet extends HttpServlet {
 			}
 			System.out.println(date);
 			todo.setDueDate(date);
-			todo.setDueTime2(time);
+			//todo.setDueTime2(time);
 			todo.setPriority(priority);
 			todo.setNote(note);
 			instance.updateItem(todo);
@@ -65,7 +65,7 @@ public class AddEditServlet extends HttpServlet {
 		else if(method.equals("Add"))
 		{
 			ToDoItemDataSource instance = ToDoItemDataSource.getInstance();
-			instance.createItem(user,name, note, date, time, priority);
+			instance.createItem(user,name, note, date, priority);
 		}
 		
 //		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();

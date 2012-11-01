@@ -26,7 +26,7 @@ public class CreateItemServlet extends HttpServlet {
 		String time = req.getParameter("timepicker");
 		int priority = Integer.parseInt(req.getParameter("priority"));
 		ToDoItemDataSource instance = ToDoItemDataSource.getInstance();
-		instance.createItem(user,name, note, date, time, priority);
+		instance.createItem(user,name, note, date, priority);
 		resp.sendRedirect("list.jsp");
 	}
 }

@@ -4,15 +4,14 @@ public class ToDoItem {
 	  private long id;
 	  private long userId;
 	  private String name;
-	  private String note;
-	 
+	  private String note; 
 	  private long dueTime;
 	  private boolean checked; 
 	  private boolean noDueTime;
 	  private long priority;
 	  //Modified .. Remove in final!
 	  private String dueDate;
-	  private String dueTime2;
+	  //private String dueTime2;
 	  public String getDueDate() {
 		return dueDate;
 	}
@@ -21,13 +20,13 @@ public class ToDoItem {
 		this.dueDate = duedate;
 	}
 
-	public String getDueTime2() {
-		return dueTime2;
-	}
-
-	public void setDueTime2(String dueTime2) {
-		this.dueTime2 = dueTime2;
-	}
+//	public String getDueTime2() {
+//		return dueTime2;
+//	}
+//
+//	public void setDueTime2(String dueTime2) {
+//		this.dueTime2 = dueTime2;
+//	}
 
 	//End remove.
 	  

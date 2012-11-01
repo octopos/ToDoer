@@ -59,7 +59,7 @@
 			dueDate = dueDate.substring(0, dueDate.length() - 1);
 		}
 	%>
-	<form name="frmCreateItem" onSubmit="validate()" action="addEdit"
+	<form name="frmCreateItem" onSubmit="return validate()" action="addEdit"
 		method="post">
 		<table align="center">
 			<tr>
@@ -75,11 +75,6 @@
 				<td>Date:</td>
 				<td><input name="datepicker" type="text" id="datepicker"
 					value=<%=dueDate%> /></td>
-			</tr>
-			<tr>
-				<td>Due Time:</td>
-				<td><input name="timepicker" id="timepicker"
-					value=<%=item.getDueTime2()%> /> <br /></td>
 			</tr>
 			<tr>
 				<td>Priority:</td>
