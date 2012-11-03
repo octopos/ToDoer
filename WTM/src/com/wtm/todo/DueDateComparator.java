@@ -18,9 +18,9 @@ public class DueDateComparator implements Comparator<ToDoItem> {
 		String twoStr = two.getDueDate();
 		if(oneStr.equals(twoStr))
 			return 0;
-		if(oneStr.isEmpty())
+		if(oneStr.isEmpty() || oneStr.equals(""))
 			return 1;
-		if(twoStr.isEmpty())
+		if(twoStr.isEmpty() || oneStr.equals(""))
 			return -1;
 		
 		SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
