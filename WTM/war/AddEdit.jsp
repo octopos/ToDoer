@@ -33,10 +33,28 @@
     });
     function validate()
     {
-        if(document.frmCreateItem.taskname.value=="")
+    	var str = document.frmCreateItem.taskname.value;
+   		var date= document.frmCreateItem.datepicker.value;
+    	
+   		var d = new Date();
+    	var day= d.getDate ();
+    	var mon= d.getMonth ();
+        var year= d.getFullYear ();
+        var dateformat= mon+"/"+day+"/"+year ; 
+        
+        if(str =="")
         {
           alert("Taskname cannot be empty!");
           document.frmCreateItem.taskname.focus();
+          error = "You must have a taskname";
+          return false;
+        }
+        
+ 
+    	if(date < dateformat )
+        {
+          alert("Date cannot be a past date!");
+          document.frmCreateItem.datepicker.focus();
           error = "You must have a taskname";
           return false;
         }
