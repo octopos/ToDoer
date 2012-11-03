@@ -44,7 +44,7 @@
         
         if(str =="")
         {
-          alert("Taskname cannot be empty!");
+          alert("Taskname cannot be empty!"); 
           document.frmCreateItem.taskname.focus();
           error = "You must have a taskname";
           return false;
