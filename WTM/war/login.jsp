@@ -1,4 +1,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@ page import="com.wtm.database.UserDataSource"%>
+<%@ page import="com.wtm.database.Users"%>
+<%@ page import="java.util.List"%>
+<%@ page import="java.util.Iterator"%>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
@@ -47,7 +51,18 @@
 			</tr>
 			<tr>
 				<td>Username:</td>
-				<td><input name="username" type="text" /></td>
+				<!--<td><input name="username" type="text" /></td>-->
+				<td><select name="username">
+				<%
+					UserDataSource uds = new UserDataSource();
+					List<Users> users = uds.getAllUsers();
+					
+					for( Users user : users ){
+				%>
+						<option value=<%=user.getName()%>><%=user.getName()%></option>
+				<%} %>
+					</select>
+				</td>
 			</tr>
 			<tr>
 				<td>Password:</td>
