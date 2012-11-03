@@ -51,7 +51,7 @@
         }
         
  
-    	if(date < dateformat )
+    	if( !date.equals("") && date < dateformat )
         {
           alert("Date cannot be a past date!");
           document.frmCreateItem.datepicker.focus();
