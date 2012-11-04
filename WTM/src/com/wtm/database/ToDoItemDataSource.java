@@ -4,6 +4,7 @@ package com.wtm.database;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -48,7 +49,15 @@ public class ToDoItemDataSource {
 	}
 
 
-	public void createItem(String user,String name,String note, String date, long priority) { //change to values
+	public ToDoItem createItem(String user,String name,String note, String date, long priority) { //change to values
+		ToDoItem todo = new ToDoItem();
+		todo.setName(name);
+		todo.setUserId(getUserID(user));
+		todo.setNote(note);
+		todo.setDueDate(date);
+		todo.setDueTime(dateStrToEpoch(date));
+		todo.setPriority(priority);
+		todo.setChecked(false);
 		boolean checked = false;
 		Entity item = new Entity("items" , dbKey);
 		item.setProperty("Username",user);
@@ -59,11 +68,13 @@ public class ToDoItemDataSource {
 		item.setProperty("Priority", priority);
 		item.setProperty("Checked", checked );
 		datastore.put(item);
-
+		Key id = getItemKey(todo);
+		todo.setId(id.getId());
+		return todo;
 	}
 
 	public void deleteItem(ToDoItem item) {
-		datastore.delete(getItemID(item));
+		datastore.delete(getItemKey(item));
 		System.out.println("deleting here");
 	}
 
@@ -106,6 +117,7 @@ public class ToDoItemDataSource {
 			for (Entity singleItem : items) {
 				ToDoItem temp = new ToDoItem();
 				temp.setId(singleItem.getKey().getId());
+				System.out.println("id:"+singleItem.getKey().getId());
 				temp.setUserId(uid);
 				temp.setName((String)singleItem.getProperty("Taskname"));
 				//temp.setName("abcd");
@@ -115,7 +127,7 @@ public class ToDoItemDataSource {
 				String date = (String)singleItem.getProperty("Date");
 				if(!date.isEmpty())
 				{
-					temp.setDueTime(this.dateToEpoch((String)singleItem.getProperty("Date")));
+					temp.setDueTime(this.dateStrToEpoch((String)singleItem.getProperty("Date")));
 					System.out.print(temp.getDueTime());
 				}
 				//temp.setDueTime2((String)singleItem.getProperty("Time"));
@@ -166,7 +178,7 @@ public class ToDoItemDataSource {
 				String date = (String)singleItem.getProperty("Date"); 
 				if(!date.isEmpty())
 					{
-						temp.setDueTime(this.dateToEpoch((String)singleItem.getProperty("Date")));
+						temp.setDueTime(this.dateStrToEpoch((String)singleItem.getProperty("Date")));
 						System.out.print(temp.getDueTime());
 					}
 				//temp.setDueTime2((String)singleItem.getProperty("Time"));
@@ -180,7 +192,7 @@ public class ToDoItemDataSource {
 		return list;
 	}
 	//extra functions
-	public long dateToEpoch(String dateStr)
+	public long dateStrToEpoch(String dateStr)
 	{
 		SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
 		Date date = null;
@@ -200,7 +212,7 @@ public class ToDoItemDataSource {
 		this.updateItem(item);
 
 	}
-	public static Key getItemID(ToDoItem item){
+	public static Key getItemKey(ToDoItem item){
 		long id = 0;
 		Key itemid = null; 
 		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
@@ -233,6 +245,20 @@ public class ToDoItemDataSource {
 		}
 		return userid;
 	}
+	public Date epochToDate(long millis){
+		Calendar cal = Calendar.getInstance();
+		cal.setTimeInMillis(millis);
+		Date date = cal.getTime();
+		//System.out.println("Date:"+cal.getTime());
+		return date;
+	}
+	
+	public String dateToString(Date date){
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		//System.out.println("Date format:" + sdf.format(date));
+		return sdf.format(date);
+	} 
+	
 	public static ToDoItemDataSource getInstance() {
 		if(instance == null) {
 			instance = new ToDoItemDataSource();
