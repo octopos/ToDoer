@@ -145,7 +145,6 @@ public class ChangeTracker {
 					} else if (columns[0].equals(ActionType.Delete.toString()))
 						itemDataStore
 								.deleteItemById(Long.parseLong(columns[1]));
-
 				}
 
 				for (Long oneId : changedIds)
@@ -160,13 +159,10 @@ public class ChangeTracker {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
 		}
-
-		synchronizeUsers(userDataStore);
-
 	}
 
-	public static void synchronizeUsers(UserDataSource userDS) {
-		ArrayList<Users> usersList = (ArrayList<Users>) userDS
+	public void synchronizeUsers() {
+		ArrayList<Users> usersList = (ArrayList<Users>) userDataStore
 				.getAllUsers();
 		ArrayList<String> existingUsers = new ArrayList<String>();
 
@@ -210,9 +206,9 @@ public class ChangeTracker {
 					targetUser.setName(columns[0]);
 					targetUser.setPwd(columns[1]);
 					if (existingUsers.contains(targetUser.getName())) {
-						userDS.updateUsers(targetUser);
+						userDataStore.updateUsers(targetUser);
 					} else
-						userDS.createUsers(targetUser.getName(),
+						userDataStore.createUsers(targetUser.getName(),
 								targetUser.getPwd());
 				}
 				requestReader.close();

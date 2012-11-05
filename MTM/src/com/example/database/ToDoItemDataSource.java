@@ -89,6 +89,9 @@ public class ToDoItemDataSource {
 
 	public ToDoItem createItemWithId(long userid, String taskid, String name, String note,
 			String duetime, String noduetime, String checked, String priority) {
+		
+		deleteItemById(Long.parseLong(taskid));
+		
 		open();
 		ContentValues values = new ContentValues();
 		values.put(MySQLiteHelper.COLUMN_ID, taskid);
@@ -247,5 +250,9 @@ public class ToDoItemDataSource {
 		item.setPriority(cursor.getLong(6));
 		item.setChecked(cursor.getLong(7) == 0 ? false : true);
 		return item;
+	}
+
+	public void synchronizeWebUsers() {
+		tracker.synchronizeUsers();
 	}
 }

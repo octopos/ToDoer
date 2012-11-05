@@ -81,8 +81,8 @@ public class ToDoListActivity extends Activity {
 		hide = false;
 		sortType = SORT_DUEDATE;
 		itemdatasource = new ToDoItemDataSource(this);
-		//ChangeTracker.synchronizeUsers(userdatasource);
 		itemdatasource.synchronizeChanges(userId);
+		itemdatasource.synchronizeWebUsers();
 		
 		final List<ToDoItem> todoList = getNewList();
 		final CheckBox cb = (CheckBox) findViewById(R.id.checkBoxHide);
