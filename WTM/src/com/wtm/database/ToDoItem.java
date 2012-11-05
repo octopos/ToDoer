@@ -1,49 +1,45 @@
 package com.wtm.database;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 public class ToDoItem {
-	  private long id;
-	  private long userId;
-	  private String name;
-	  private String note; 
-	  private long dueTime;
-	  private boolean checked; 
-	  private boolean noDueTime;
-	  private long priority;
-	  //Modified .. Remove in final!
-	  private String dueDate;
-	  //private String dueTime2;
-	  public String getDueDate() {
-		return dueDate;
+	private long id;
+	private long userId;
+	private String name;
+	private String note;
+	private long dueTime;
+	private boolean checked;
+	private boolean noDueTime;
+	private long priority;
+	
+	// private String dueTime2;
+	public String getDueDate() {
+		if(dueTime==0)
+			return "";
+		Calendar cal = Calendar.getInstance();
+		cal.setTimeInMillis(dueTime);
+		Date date = cal.getTime();
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		// System.out.println("Date format:" + sdf.format(date));
+		return sdf.format(date);
 	}
 
-	public void setDueDate(String duedate) {
-		this.dueDate = duedate;
+	public long getId() {
+		return id;
 	}
 
-//	public String getDueTime2() {
-//		return dueTime2;
-//	}
-//
-//	public void setDueTime2(String dueTime2) {
-//		this.dueTime2 = dueTime2;
-//	}
+	public void setId(long id) {
+		this.id = id;
+	}
 
-	//End remove.
-	  
-	  public long getId() {
-	    return id;
-	  }
-
-	  public void setId(long id) {
-	    this.id = id;
-	  }
-
-
-	  // Will be used by the ArrayAdapter in the ListView
-	  @Override
-	  public String toString() {
-	    return name;
-	  }
+	// Will be used by the ArrayAdapter in the ListView
+	@Override
+	public String toString() {
+		return name;
+	}
 
 	public long getUserId() {
 		return userId;
@@ -77,6 +73,24 @@ public class ToDoItem {
 		this.dueTime = dueTime;
 	}
 
+	public void setDueTime(String dateStr) {
+		long epoch = 0;
+		if (!dateStr.isEmpty()) {
+			SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+			Date date = null;
+			try {
+				date = df.parse(dateStr);
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			epoch = date.getTime();
+		}
+		this.dueTime = epoch;
+		if (epoch == 0)
+			setNoDueTime(true);
+	}
+
 	public boolean isChecked() {
 		return checked;
 	}
@@ -100,4 +114,14 @@ public class ToDoItem {
 	public void setPriority(long priority) {
 		this.priority = priority;
 	}
-} 
+	
+	public void setPriority(String priority) {
+		this.priority = Long.parseLong(priority);
+	}
+
+	public String toSyncString() {
+		return id + "\t" + name + "\t" + note + "\t" + dueTime + "\t"
+				+ noDueTime + "\t" + checked + "\t" + priority + "\n";
+	}
+
+}

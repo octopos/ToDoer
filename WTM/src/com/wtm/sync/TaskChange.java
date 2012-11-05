@@ -1,7 +1,10 @@
 package com.wtm.sync;
 
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.TimeZone;
 
 import com.wtm.database.ToDoItem;
 
@@ -16,34 +19,76 @@ public class TaskChange implements Serializable {
 		this.taskID = taskID;
 		this.action = action;
 		this.timestamp = new Date();// initialized to current date
-												// and time
+									// and time
 	}
 
-	public TaskChange(String action, String time, String taskid, String userid, String name, String note,
-			String duetime, String noduetime, String checked, String priority)
-	{
-		
+	public TaskChange(String time, String action, String taskid,long userid, String name,
+			String note, String duetime, String noduetime, String checked,
+			String priority) {
+		taskID = Long.parseLong(taskid);
+		setAction(action);
+		setTimestamp(time);
+		item = new ToDoItem();
+		item.setId(taskID);
+		item.setUserId(userid);
+		item.setName(name);
+		item.setNote(note);
+		if (noduetime.equals("true")) {
+			item.setDueTime(0);
+			item.setNoDueTime(true);
+		}
+		else{
+			item.setDueTime(Long.parseLong(duetime));
+			item.setNoDueTime(false);
+		}
+		if (checked.equals("true"))
+			item.setChecked(true);
+		else
+			item.setChecked(false);
+		item.setPriority(priority);
 	}
-	
-	@SuppressWarnings("deprecation")
+
+	public TaskChange(String time, String action, String taskid) {
+		taskID = Long.parseLong(taskid);
+		setAction(action);
+		setTimestamp(time);
+	}
+
 	public TaskChange(long taskID, String action, String time) {
 		this.taskID = taskID;
 		setAction(action);
-		this.timestamp = new Date(time);;
+		setTimestamp(time);
+	}
+
+	public String getTimestampString() {
+		SimpleDateFormat sdf = new SimpleDateFormat();
+		sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
+		return sdf.format(timestamp);
+	}
+
+	public void setTimestamp(String time) {
+		SimpleDateFormat sdf = new SimpleDateFormat();
+		sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
+		try {
+			this.timestamp = sdf.parse(time);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Override
 	public String toString() {
 		String change = "";
-		change += "Change [ " + timestamp + ", " + taskID + ", " + action
-				+ "]\n";
+		change += "Change [ " + getTimestampString() + ", " + taskID + ", "
+				+ action + "]\n";
 		return change;
 	}
-	
+
 	public String toSyncString() {
-		return timestamp + "\t"+action+"\t";
+		return getTimestampString() + "\t" + action + "\t";
 	}
-	
+
 	public long getTaskID() {
 		return taskID;
 	}
@@ -72,9 +117,13 @@ public class TaskChange implements Serializable {
 	public Date getTimestamp() {
 		return timestamp;
 	}
-	
+
 	public void setTimestamp(Date timestamp) {
 		this.timestamp = timestamp;
+	}
+
+	public ToDoItem getItem() {
+		return item;
 	}
 
 }

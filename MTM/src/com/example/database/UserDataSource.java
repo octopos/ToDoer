@@ -3,6 +3,8 @@ package com.example.database;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.example.synchronize.ChangeTracker;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -16,7 +18,7 @@ public class UserDataSource {
 	private MySQLiteHelper dbHelper;
 	private String[] allColumns = { MySQLiteHelper.COLUMN_ID,
 			MySQLiteHelper.COLUMN_NAME, MySQLiteHelper.COLUMN_PASSWORD };
-
+	
 	public UserDataSource(Context context) {
 		dbHelper = new MySQLiteHelper(context);
 	}

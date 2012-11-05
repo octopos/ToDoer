@@ -47,6 +47,14 @@
 		<servlet-name>SyncServlet</servlet-name>
 		<url-pattern>/sync.do</url-pattern>
 	</servlet-mapping>
+	<servlet>
+		<servlet-name>StubServlet</servlet-name>
+		<servlet-class>com.wtm.sync.StubServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>StubServlet</servlet-name>
+		<url-pattern>/stub.do</url-pattern>
+	</servlet-mapping>
 	<welcome-file-list>
 		<welcome-file>login.jsp</welcome-file>
 	</welcome-file-list>

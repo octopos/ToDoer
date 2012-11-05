@@ -54,38 +54,39 @@
 		id = Long.parseLong(request.getParameter("id"));
 		ToDoItem item = ToDoItemDataSource.getInstance()
 				.getItemByItemId(id);
+		System.out.println("Preparing to edit item" + item.toSyncString());
 		String dueDate = item.getDueDate();
 		if (dueDate.endsWith("/")) {
 			dueDate = dueDate.substring(0, dueDate.length() - 1);
 		}
 	%>
-	<form name="frmCreateItem" onSubmit="return validate()" action="addEdit"
-		method="post">
+	<form name="frmCreateItem" onSubmit="return validate()"
+		action="addEdit" method="post">
 		<table align="center">
 			<tr>
 				<td>Task Name:</td>
 				<td><input name="taskname" type="text"
-					value=<%=item.getName()%> /></td>
+					value="<%=item.getName()%>" /></td>
 			</tr>
 			<tr>
 				<td>Note:</td>
-				<td><input name="note" type="text" value=<%=item.getNote()%> /></td>
+				<td><input name="note" type="text" value="<%=item.getNote()%>" /></td>
 			</tr>
 			<tr>
 				<td>Date:</td>
 				<td><input name="datepicker" type="text" id="datepicker"
-					value=<%=dueDate%> /></td>
+					value="<%=dueDate%>" /></td>
 			</tr>
 			<tr>
 				<td>Priority:</td>
-				<td><input type="radio" name="priority" id="low" value="1"
-					<%if (item.getPriority() == 1) {%> checked <%}%> /><label
+				<td><input type="radio" name="priority" id="low" value="0"
+					<%if (item.getPriority() == 0) {%> checked <%}%> /><label
 					for="low" /></label> <img src="../Resources/circle_green.png" height="20">
-					<input type="radio" name="priority" id="medium" value="2"
-					<%if (item.getPriority() == 2) {%> checked <%}%> /><label
+					<input type="radio" name="priority" id="medium" value="1"
+					<%if (item.getPriority() == 1) {%> checked <%}%> /><label
 					for="medium" /></label> <img src="../Resources/circle_yellow.png"
 					height="20"> <input type="radio" name="priority" id="high"
-					value="3" <%if (item.getPriority() == 3) {%> checked <%}%> /><label
+					value="2" <%if (item.getPriority() == 2) {%> checked <%}%> /><label
 					for="high" /></label> <img src="../Resources/circle_red.png" height="20">
 				</td>
 			</tr>
@@ -95,9 +96,10 @@
 					type="hidden" name="method" value="Edit" /> <input type="submit"
 					value="Edit" /></td>
 
-				<td><form action="list.jsp" method="post">
-						<input type="submit" value="Cancel" />
-					</form></td>
+<!-- 				<td><form action="list.jsp" method="post"> -->
+<!-- 						<input type="submit" value="Cancel" /> -->
+<!-- 					</form></td> -->
+<td><input type="button" value="Cancel" onclick='window.location.href="list.jsp"' /></td>
 
 			</tr>
 		</table>

@@ -82,11 +82,11 @@
 			<tr>
 				<td>Priority:</td>
 				<td>
-					<input type="radio" name="priority" id="low" value="1" checked/><label for="low" /></label>
+					<input type="radio" name="priority" id="low" value="0" checked/><label for="low" /></label>
 						<img src="../Resources/circle_green.png" height="20">
-					<input type="radio" name="priority" id="medium" value="2" /><label for="medium" /></label>
+					<input type="radio" name="priority" id="medium" value="1" /><label for="medium" /></label>
 						<img src="../Resources/circle_yellow.png" height="20">
-					<input type="radio" name="priority" id="high" value="3" /><label for="high" /></label>
+					<input type="radio" name="priority" id="high" value="2" /><label for="high" /></label>
 						<img src="../Resources/circle_red.png" height="20">
 				</td>
 			</tr>

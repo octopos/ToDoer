@@ -24,6 +24,7 @@ import com.example.database.DueDateComparator;
 import com.example.database.PriorityComparator;
 import com.example.database.ToDoItem;
 import com.example.database.ToDoItemDataSource;
+import com.example.synchronize.ChangeTracker;
 
 @TargetApi(9)
 public class ToDoListActivity extends Activity {
@@ -80,7 +81,9 @@ public class ToDoListActivity extends Activity {
 		hide = false;
 		sortType = SORT_DUEDATE;
 		itemdatasource = new ToDoItemDataSource(this);
-
+		//ChangeTracker.synchronizeUsers(userdatasource);
+		itemdatasource.synchronizeChanges(userId);
+		
 		final List<ToDoItem> todoList = getNewList();
 		final CheckBox cb = (CheckBox) findViewById(R.id.checkBoxHide);
 		cb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -163,16 +166,22 @@ public class ToDoListActivity extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.menu_sync:
-			itemdatasource.synchronizeChanges();
-			return true;
-		case R.id.menu_duedate:
-			sortType = SORT_DUEDATE;
+			itemdatasource.synchronizeChanges(userId);
 			List<ToDoItem> todoList = getNewList();
 			final ListView toDoListView = (ListView) findViewById(R.id.listView1);
 			ToDoListAdapter adapter = (ToDoListAdapter) toDoListView
 					.getAdapter();
 			adapter.updateList(todoList);
 			adapter.notifyDataSetChanged();
+			return true;
+		case R.id.menu_duedate:
+			sortType = SORT_DUEDATE;
+			List<ToDoItem> todoListd = getNewList();
+			final ListView toDoListViewd = (ListView) findViewById(R.id.listView1);
+			ToDoListAdapter adapterd = (ToDoListAdapter) toDoListViewd
+					.getAdapter();
+			adapterd.updateList(todoListd);
+			adapterd.notifyDataSetChanged();
 			return true;
 		case R.id.menu_priority:
 			sortType = SORT_PRIORITY;

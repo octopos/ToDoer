@@ -36,7 +36,7 @@ public class TaskChangesDataSource {
 		values.put(MySQLiteHelper.COLUMN_TCTASKID, change.getTaskID());
 		values.put(MySQLiteHelper.COLUMN_TCACTION, change.getAction()
 				.toString());
-		values.put(MySQLiteHelper.COLUMN_TCTIME, change.getTimestamp().toString());
+		values.put(MySQLiteHelper.COLUMN_TCTIME, change.getTimestampString());
 		database.insert(MySQLiteHelper.TABLE_TASKCHANGES, null, values);
 		System.out.println("Created change item for "+change.getTaskID());
 		close();
@@ -61,8 +61,10 @@ public class TaskChangesDataSource {
 
 	public void updateTaskChange(long taskid, Date time) {
 		open();
+		TaskChange ch = new TaskChange(taskid, ActionType.Update);
+		ch.setTimestamp(time);
 		ContentValues values = new ContentValues();
-		values.put(MySQLiteHelper.COLUMN_TCTIME, time.toString());
+		values.put(MySQLiteHelper.COLUMN_TCTIME, ch.getTimestampString());
 		database.update(MySQLiteHelper.TABLE_TASKCHANGES, values,
 				MySQLiteHelper.COLUMN_TCTASKID + " = " + taskid, null);
 		System.out.println("Updated change item for "+taskid);
@@ -94,6 +96,14 @@ public class TaskChangesDataSource {
 		String condition = MySQLiteHelper.COLUMN_TCTASKID + " = " + taskid;
 		database.delete(MySQLiteHelper.TABLE_TASKCHANGES, condition, null);
 		System.out.println("Deleted changes for "+taskid);
+		close();
+	}
+	
+	public void removeDeleteChanges(){
+		open();
+		System.out.println("Removing delete changes");
+		String condition = MySQLiteHelper.COLUMN_TCACTION + " = '" + ActionType.Delete.toString()+"'";
+		database.delete(MySQLiteHelper.TABLE_TASKCHANGES, condition, null);
 		close();
 	}
 	

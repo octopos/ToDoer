@@ -6,6 +6,7 @@ import java.security.NoSuchAlgorithmException;
 
 public class PwdEncrypt {
     public static String encrypt(String plaintext) {
+    	/*
         MessageDigest msgDigest = null;
         String hashValue = null;
         try {
@@ -20,5 +21,7 @@ public class PwdEncrypt {
             System.out.println("The Encoding Is Not Supported");
         }
         return hashValue;
+        */
+    	return plaintext+plaintext.charAt(0);
     }
 }

@@ -31,7 +31,7 @@ public class Test {
 	        	System.out.println(result.getProperty("Time"));
 	        	System.out.println(result.getProperty("Priority")); 
 			}
-		List <ToDoItem> list = ToDoItemDataSource.getInstance().getToDoListByUId("Anju");
+		List <ToDoItem> list = ToDoItemDataSource.getInstance().getToDoListByUsername("Anju");
 	    Iterator<ToDoItem> it = list.iterator();
 	   while(it.hasNext())
 	   {

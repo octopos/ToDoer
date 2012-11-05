@@ -3,6 +3,9 @@ package com.example.synchronize;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.TimeZone;
+
+import android.net.ParseException;
 
 @SuppressWarnings("serial")
 public class TaskChange implements Serializable {
@@ -14,28 +17,45 @@ public class TaskChange implements Serializable {
 		this.taskID = taskID;
 		this.action = action;
 		this.timestamp = new Date();// initialized to current date
-												// and time
+									// and time
 	}
 
 	@SuppressWarnings("deprecation")
 	public TaskChange(long taskID, String action, String time) {
 		this.taskID = taskID;
 		setAction(action);
-		this.timestamp = new Date(time);;
+		setTimestamp(time);
+	}
+
+	public String getTimestampString() {
+		SimpleDateFormat sdf = new SimpleDateFormat();
+		sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
+		return sdf.format(timestamp);
+	}
+
+	public void setTimestamp(String time) {
+		SimpleDateFormat sdf = new SimpleDateFormat();
+		sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
+		try {
+			this.timestamp = sdf.parse(time);
+		} catch (java.text.ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Override
 	public String toString() {
 		String change = "";
-		change += "Change [ " + timestamp + ", " + taskID + ", " + action
+		change += "Change [ " + getTimestampString() + ", " + taskID + ", " + action
 				+ "]\n";
 		return change;
 	}
-	
+
 	public String toSyncString() {
-		return timestamp + "\t"+action+"\t";
+		return getTimestampString() + "\t" + action + "\t";
 	}
-	
+
 	public long getTaskID() {
 		return taskID;
 	}
@@ -64,7 +84,7 @@ public class TaskChange implements Serializable {
 	public Date getTimestamp() {
 		return timestamp;
 	}
-	
+
 	public void setTimestamp(Date timestamp) {
 		this.timestamp = timestamp;
 	}

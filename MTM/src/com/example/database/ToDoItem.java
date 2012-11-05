@@ -14,7 +14,7 @@ public class ToDoItem implements Serializable {
 	private long priority;
 
 	public String toSyncString() {
-		return id+"\t"+userId+"\t"+name+"\t"+note+"\t"+dueTime+"\t"+checked+"\t"+noDueTime+"\t"+priority;
+		return id+"\t"+name+"\t"+note+"\t"+dueTime+"\t"+noDueTime+"\t"+checked+"\t"+priority;
 	}
 	
 	public long getId() {

@@ -36,10 +36,10 @@ public class ToDoItemDataSource {
 		dbHelper.close();
 	}
 
-	public void synchronizeChanges()
+	public void synchronizeChanges(long userid)
 	{
 		open();
-		tracker.synchronizeChanges();
+		tracker.synchronizeChanges(userid);
 		close();
 	}
 	
@@ -87,7 +87,7 @@ public class ToDoItemDataSource {
 		return newItem;
 	}
 
-	public ToDoItem createItemWithId(String taskid, String userid, String name, String note,
+	public ToDoItem createItemWithId(long userid, String taskid, String name, String note,
 			String duetime, String noduetime, String checked, String priority) {
 		open();
 		ContentValues values = new ContentValues();
@@ -128,7 +128,7 @@ public class ToDoItemDataSource {
 		close();
 	}
 	
-	public void deleteItemById(Long itemid) {
+	public void deleteItemById(Long itemid) {//Used by sync method so no need to track changes made by this
 		open();
 		database.delete(MySQLiteHelper.TABLE_TODOLIST, MySQLiteHelper.COLUMN_ID
 				+ " = " + itemid, null);

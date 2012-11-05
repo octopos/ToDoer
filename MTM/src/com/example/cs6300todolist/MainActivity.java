@@ -14,8 +14,10 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import com.example.database.ToDoItemDataSource;
 import com.example.database.UserDataSource;
 import com.example.database.Users;
+import com.example.synchronize.ChangeTracker;
 
 public class MainActivity extends Activity {
 
@@ -27,7 +29,9 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         userdatasource = new UserDataSource(this);
+        //ChangeTracker.synchronizeUsers(userdatasource);
         listofUsers = new ArrayList<Users>();
+        
         listofUsers.addAll(userdatasource.getAllUsers());
 
         final Spinner user_spinner = (Spinner) findViewById(R.id.spinner1);

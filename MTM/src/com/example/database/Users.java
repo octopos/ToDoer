@@ -33,4 +33,9 @@ public class Users {
 	  public String toString() {
 	    return name;
 	  }
+
+	public String toSyncString() {
+		return getName()+"\t"+getPwd()+"\n";
+	}
+
 } 

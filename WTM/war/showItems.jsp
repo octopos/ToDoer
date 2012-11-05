@@ -11,6 +11,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="com.wtm.database.ToDoItem" %>
 <%@ page import="com.wtm.database.ToDoItemDataSource" %>
+<%@ page import="com.wtm.database.UserDataSource" %>
 <%@ page import="java.util.Iterator"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
@@ -36,7 +37,7 @@
         for (Entity singleItem : items) {
         	pageContext.setAttribute("item_key",singleItem.getKey());
         	String user = (String)singleItem.getProperty("Username"); //test string cast - Works!
-        	long temp = ToDoItemDataSource.getUserID(user);
+        	long temp = UserDataSource.getUserID(user);
         	pageContext.setAttribute("item_uid",temp);
         	pageContext.setAttribute("item_user" ,user);
         	pageContext.setAttribute("item_name" ,
@@ -61,14 +62,14 @@
     
 %>
 
-<%	
-	List <ToDoItem> list = ToDoItemDataSource.getInstance().getToDoListByUId((String)session.getAttribute("User"));
+<%
+	List <ToDoItem> list = ToDoItemDataSource.getInstance().getToDoListByUsername((String)session.getAttribute("User"));
 	    Iterator<ToDoItem> it = list.iterator();
 	    ToDoItem temp;
 	   while(it.hasNext())
 	   {
-			temp = it.next();
-		   %><%=temp.getId()%>:<%=temp.getUserId()%>:Name-<%=temp.getName()%>:<%=temp.getNote()%>:<%=temp.getPriority()%>  <%=temp.isChecked()%><br/>
+	temp = it.next();
+%><%=temp.getId()%>:<%=temp.getUserId()%>:Name-<%=temp.getName()%>:<%=temp.getNote()%>:<%=temp.getPriority()%>  <%=temp.isChecked()%><br/>
 		   <%
 	   }
 %>
